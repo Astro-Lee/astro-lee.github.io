@@ -71,6 +71,10 @@ dpkg-source --commit
 debuild -S -sa -k<span class="pl-smi">$DEBSIGN_KEYID</span> <span class="pl-k">|</span> tee /tmp/debuild.log <span class="pl-k">2&gt;&amp;1</span>
 dupload XXX.changes
 dput -f ppa:ruizhi-li/astrosoftware XXX.changes</pre></div>
+<p><code class="notranslate">psfex-3.24.1.tar.gz</code> 和 <code class="notranslate">psfex-3.24.1</code></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">cd</span> psfex-3.24.1
+dh_make -f ../psfex-3.24.1.tar.gz
+./autogen.sh</pre></div>
 <h1>参考</h1>
 <ul>
 <li><a href="https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html" rel="nofollow">Debian 新维护者手册</a></li>

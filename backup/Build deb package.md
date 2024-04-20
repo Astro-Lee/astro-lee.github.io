@@ -18,6 +18,14 @@ dupload XXX.changes
 dput -f ppa:ruizhi-li/astrosoftware XXX.changes
 ```
 
+
+`psfex-3.24.1.tar.gz` 和 `psfex-3.24.1`
+```bash
+cd psfex-3.24.1
+dh_make -f ../psfex-3.24.1.tar.gz
+./autogen.sh
+```
+
 # 参考
 - [Debian 新维护者手册](https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html)
 - [Astropy Packaging Tutorial](https://wiki.debian.org/DebianAstro/AstropyPackagingTutorial/Preparation)
