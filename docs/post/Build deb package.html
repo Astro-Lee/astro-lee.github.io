@@ -11,7 +11,7 @@
     </script>
 <meta name="description" content="Build deb package">
 <title>Build deb package</title>
-
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 </head>
 <style>
@@ -49,12 +49,6 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         </svg>
     </a>
     
-    <a href="https://github.com/Astro-Lee/astro-lee.github.io/issues/1" target="_blank" class="btn btn-invisible circle" title="Issue">
-        <svg class="octicon" width="16" height="16">
-            <path id="pathIssue" fill-rule="evenodd"></path>
-        </svg>
-    </a>
-    
 
     <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
         <svg class="octicon" width="16" height="16" >
@@ -65,8 +59,26 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>Build deb package</p></div>
-<div style="font-size:small;margin-top:8px;float:right;"></div>
+<div class="markdown-body" id="postBody"><p>Build deb package.<br>
+本文介绍deb的构建方式</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">DEBMAIL=<span class="pl-s"><span class="pl-pds">"</span>xxxx@gamil.com<span class="pl-pds">"</span></span>
+DEBFULLNAME=<span class="pl-s"><span class="pl-pds">"</span>XXX<span class="pl-pds">"</span></span>
+DEBSIGN_KEYID=<span class="pl-s"><span class="pl-pds">"</span>xyrtyfhfghgfhfg<span class="pl-pds">"</span></span>
+<span class="pl-k">export</span> DEBMAIL DEBFULLNAME DEBSIGN_KEYID</pre></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate">gpg --full-generate-key --expert
+gpg --armor --export id
+dpkg-source --commit
+debuild -S -sa -k<span class="pl-smi">$DEBSIGN_KEYID</span> <span class="pl-k">|</span> tee /tmp/debuild.log <span class="pl-k">2&gt;&amp;1</span>
+dupload XXX.changes
+dput ppa:ruizhi-li/ppa XXX.changes</pre></div>
+<h1>参考</h1>
+<ul>
+<li><a href="https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html" rel="nofollow">Debian 新维护者手册</a></li>
+<li><a href="https://wiki.debian.org/DebianAstro/AstropyPackagingTutorial/Preparation" rel="nofollow">Astropy Packaging Tutorial</a></li>
+<li><a href="https://briteming.blogspot.com/2018/06/blog-post_58.html" rel="nofollow">如何发布自己的"个人软件包存档</a></li>
+<li><a href="https://hedzr.com/packaging/deb/publishing-and-hosting-your-own-dev-at-ppa/" rel="nofollow">发布你的开源软件到 Ubuntu PPA</a></li>
+</ul></div>
+<div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
 </div>
@@ -76,9 +88,9 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </p>
 
 <script>
-if(""!=""){
+if("04/20/2024"!=""){
     var now=new Date();
-    var startSite=new Date("");
+    var startSite=new Date("04/20/2024");
     var diff=now.getTime()-startSite.getTime();
     var diffDay=Math.floor(diff/(1000*60*60*24));
     document.getElementById("year").innerHTML=now.getFullYear();
