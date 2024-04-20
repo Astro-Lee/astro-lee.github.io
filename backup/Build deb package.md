@@ -1,6 +1,33 @@
 Build deb package.
 本文介绍deb的构建方式
 
+创建GPG公钥和私钥
+```bash
+gpg --full-generate-key --expert
+# 记住私钥的密码
+```
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/a9ba85af-5f40-41c8-b814-a96de04927aa)
+
+```bash
+gpg --armor --export GPG密钥ID
+```
+复制以 `-----BEGIN PGP PUBLIC KEY BLOCK-----` 开头并以 `-----END PGP PUBLIC KEY BLOCK-----` 结尾的 GPG 密钥。将内容提交到 [keyserver](https://keyserver.ubuntu.com/)
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/b2a628d4-dc39-4d12-adc3-dfa642f7a822)
+
+
+等待10分钟左右，进入 [launchpad](https://launchpad.net/) 的`OpenPGP keys`
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/0069a056-8742-4723-9f45-a5c7451d2e49)
+
+运行一下命令获得fingerprint并填入
+```bash
+gpg --fingerprint
+```
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/ea238455-1d1a-4420-ae04-7a1dec8a19f9)
+将fingerprint并填入`OpenPGP keys`
+
+
+
+
 ```bash
 DEBMAIL="xxxx@gamil.com"
 DEBFULLNAME="XXX"
@@ -18,11 +45,10 @@ dupload XXX.changes
 dput -f ppa:ruizhi-li/astrosoftware XXX.changes
 ```
 
-
-`psfex-3.24.1.tar.gz` 和 `psfex-3.24.1`
+`psfex-3.24.2.tar.gz` 和 `psfex-3.24.2`
 ```bash
-cd psfex-3.24.1
-dh_make -f ../psfex-3.24.1.tar.gz
+cd psfex-3.24.2
+dh_make -f ../psfex-3.24.2.tar.gz
 ./autogen.sh && ./configure
 ```
 
