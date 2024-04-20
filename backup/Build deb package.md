@@ -16,7 +16,6 @@ gpg --armor --export GPG密钥ID
 
 ![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/b2a628d4-dc39-4d12-adc3-dfa642f7a822)
 
-
 等待10分钟左右，进入 [launchpad](https://launchpad.net/) 的`OpenPGP keys`
 
 ![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/0069a056-8742-4723-9f45-a5c7451d2e49)
@@ -43,35 +42,33 @@ DEBMAIL="xxxx@gamil.com"
 DEBFULLNAME="XXX"
 DEBSIGN_KEYID="GPG密钥ID"
 export DEBMAIL DEBFULLNAME DEBSIGN_KEYID
+#DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -I -us -uc"
+#DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
 ```
-
-```bash
-gpg --full-generate-key --expert
-gpg --armor --export id
-dpkg-source --commit #修改过上游版本，需要commit
-debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2>&1
-dupload XXX.changes
-dput -f ppa:ruizhi-li/astrosoftware XXX.changes
-```
+# 下载项目源码
 `psfex-3.24.2.tar.gz` 和 `psfex-3.24.2`
+
 ```bash
 cd psfex-3.24.2
-dh_make -f ../psfex-3.24.2.tar.gz
 ./autogen.sh && ./configure
+dh_make -f ../psfex-3.24.2.tar.gz
 ```
 
-修改过上游版本，需要commit `dpkg-source --commit`
+修改debian目录中`control`, `changelog`和其他文件的内容
 
-编辑`debian/changelog`
+其中编辑`debian/changelog`
 ![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/431d2007-3b7c-42ea-bc9f-83b47ca23b06)
 
 ```bash
-debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2>&1
-# 输入签名的密码
+dpkg-source --commit #修改过上游版本的源码，需要commit 
 ```
-```bash
-dput -f ppa:ruizhi-li/astrosoftware ../XXX.changes
 ```
+debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2>&1 # 并输入签名的密码
+```
+dupload XXX.changes
+dput -f ppa:ruizhi-li/XXXsoftware XXX.changes
+```
+
 # 参考
 - [Debian 新维护者手册](https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html)
 - [Astropy Packaging Tutorial](https://wiki.debian.org/DebianAstro/AstropyPackagingTutorial/Preparation)

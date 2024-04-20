@@ -84,30 +84,29 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-shell"><pre class="notranslate">DEBMAIL=<span class="pl-s"><span class="pl-pds">"</span>xxxx@gamil.com<span class="pl-pds">"</span></span>
 DEBFULLNAME=<span class="pl-s"><span class="pl-pds">"</span>XXX<span class="pl-pds">"</span></span>
 DEBSIGN_KEYID=<span class="pl-s"><span class="pl-pds">"</span>GPG密钥ID<span class="pl-pds">"</span></span>
-<span class="pl-k">export</span> DEBMAIL DEBFULLNAME DEBSIGN_KEYID</pre></div>
-<div class="highlight highlight-source-shell"><pre class="notranslate">gpg --full-generate-key --expert
-gpg --armor --export id
-dpkg-source --commit <span class="pl-c"><span class="pl-c">#</span>修改过上游版本，需要commit</span>
-debuild -S -sa -k<span class="pl-smi">$DEBSIGN_KEYID</span> <span class="pl-k">|</span> tee /tmp/debuild.log <span class="pl-k">2&gt;&amp;1</span>
-dupload XXX.changes
-dput -f ppa:ruizhi-li/astrosoftware XXX.changes</pre></div>
+<span class="pl-k">export</span> DEBMAIL DEBFULLNAME DEBSIGN_KEYID
+<span class="pl-c"><span class="pl-c">#</span>DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -I -us -uc"</span>
+<span class="pl-c"><span class="pl-c">#</span>DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"</span></pre></div>
+<h1>下载项目源码</h1>
 <p><code class="notranslate">psfex-3.24.2.tar.gz</code> 和 <code class="notranslate">psfex-3.24.2</code></p>
 <div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">cd</span> psfex-3.24.2
-dh_make -f ../psfex-3.24.2.tar.gz
-./autogen.sh <span class="pl-k">&amp;&amp;</span> ./configure</pre></div>
-<p>修改过上游版本，需要commit <code class="notranslate">dpkg-source --commit</code></p>
-<p>编辑<code class="notranslate">debian/changelog</code><br>
+./autogen.sh <span class="pl-k">&amp;&amp;</span> ./configure
+dh_make -f ../psfex-3.24.2.tar.gz</pre></div>
+<p>修改debian目录中<code class="notranslate">control</code>, <code class="notranslate">changelog</code>和其他文件的内容</p>
+<p>其中编辑<code class="notranslate">debian/changelog</code><br>
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/431d2007-3b7c-42ea-bc9f-83b47ca23b06"><img src="https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/431d2007-3b7c-42ea-bc9f-83b47ca23b06" alt="image" style="max-width: 100%;"></a></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">debuild -S -sa -k<span class="pl-smi">$DEBSIGN_KEYID</span> <span class="pl-k">|</span> tee /tmp/debuild.log <span class="pl-k">2&gt;&amp;1</span>
-<span class="pl-c"><span class="pl-c">#</span> 输入签名的密码</span></pre></div>
-<div class="highlight highlight-source-shell"><pre class="notranslate">dput -f ppa:ruizhi-li/astrosoftware ../XXX.changes</pre></div>
-<h1>参考</h1>
-<ul>
-<li><a href="https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html" rel="nofollow">Debian 新维护者手册</a></li>
-<li><a href="https://wiki.debian.org/DebianAstro/AstropyPackagingTutorial/Preparation" rel="nofollow">Astropy Packaging Tutorial</a></li>
-<li><a href="https://briteming.blogspot.com/2018/06/blog-post_58.html" rel="nofollow">如何发布自己的"个人软件包存档</a></li>
-<li><a href="https://hedzr.com/packaging/deb/publishing-and-hosting-your-own-dev-at-ppa/" rel="nofollow">发布你的开源软件到 Ubuntu PPA</a></li>
-</ul></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate">dpkg-source --commit <span class="pl-c"><span class="pl-c">#</span>修改过上游版本的源码，需要commit </span></pre></div>
+<pre class="notranslate"><code class="notranslate">debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2&gt;&amp;1 # 并输入签名的密码
+</code></pre>
+<p>dupload XXX.changes<br>
+dput -f ppa:ruizhi-li/XXXsoftware XXX.changes</p>
+<pre class="notranslate"><code class="notranslate">
+# 参考
+- [Debian 新维护者手册](https://www.debian.org/doc/manuals/maint-guide/index.zh-cn.html)
+- [Astropy Packaging Tutorial](https://wiki.debian.org/DebianAstro/AstropyPackagingTutorial/Preparation)
+- [如何发布自己的"个人软件包存档](https://briteming.blogspot.com/2018/06/blog-post_58.html)
+- [发布你的开源软件到 Ubuntu PPA](https://hedzr.com/packaging/deb/publishing-and-hosting-your-own-dev-at-ppa/)
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
