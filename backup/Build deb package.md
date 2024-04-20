@@ -1,5 +1,4 @@
-Build deb package.
-本文介绍deb的构建方式
+本文介绍 deb 的构建方式
 
 # 前期准备
 ## 创建GPG公钥和私钥
@@ -45,7 +44,7 @@ export DEBMAIL DEBFULLNAME DEBSIGN_KEYID
 #DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -I -us -uc"
 #DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
 ```
-# 下载项目源码
+# 从项目源码构建
 `psfex-3.24.2.tar.gz` 和 `psfex-3.24.2`
 
 ```bash
@@ -64,6 +63,7 @@ dpkg-source --commit #修改过上游版本的源码，需要commit
 ```
 ```
 debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2>&1 # 并输入签名的密码
+```
 ```
 dupload XXX.changes
 dput -f ppa:ruizhi-li/XXXsoftware XXX.changes
