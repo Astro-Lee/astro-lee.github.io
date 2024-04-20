@@ -1,7 +1,8 @@
 Build deb package.
 本文介绍deb的构建方式
 
-创建GPG公钥和私钥
+# 前期准备
+## 创建GPG公钥和私钥
 ```bash
 gpg --full-generate-key --expert
 # 记住私钥的密码
@@ -12,29 +13,37 @@ gpg --full-generate-key --expert
 gpg --armor --export GPG密钥ID
 ```
 复制以 `-----BEGIN PGP PUBLIC KEY BLOCK-----` 开头并以 `-----END PGP PUBLIC KEY BLOCK-----` 结尾的 GPG 密钥。将内容提交到 [keyserver](https://keyserver.ubuntu.com/)
+
 ![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/b2a628d4-dc39-4d12-adc3-dfa642f7a822)
 
 
 等待10分钟左右，进入 [launchpad](https://launchpad.net/) 的`OpenPGP keys`
+
 ![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/0069a056-8742-4723-9f45-a5c7451d2e49)
 
-运行一下命令获得fingerprint并填入
+运行一下命令获得fingerprint
 ```bash
 gpg --fingerprint
 ```
 ![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/ea238455-1d1a-4420-ae04-7a1dec8a19f9)
-将fingerprint并填入`OpenPGP keys`
 
+将fingerprint填入`OpenPGP keys`
 
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/e475b928-78cd-43cd-8cc2-3ecf806b9c89)
 
+将以下内容写入到一个临时文件`temp.txt`中，并执行`gpg -d temp.txt`
 
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/a522c7f5-38ed-4a17-ae6c-1c70c3cdca86)
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/bec8e4df-fe55-4b08-8b3c-d35b5b6d8e8e)
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/7b9995de-9da0-4521-8af0-8ff7c476fe96)
+
+## 设置环境变量
 ```bash
 DEBMAIL="xxxx@gamil.com"
 DEBFULLNAME="XXX"
-DEBSIGN_KEYID="xyrtyfhfghgfhfg"
+DEBSIGN_KEYID="GPG密钥ID"
 export DEBMAIL DEBFULLNAME DEBSIGN_KEYID
 ```
-
 
 ```bash
 gpg --full-generate-key --expert
@@ -44,7 +53,6 @@ debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2>&1
 dupload XXX.changes
 dput -f ppa:ruizhi-li/astrosoftware XXX.changes
 ```
-
 `psfex-3.24.2.tar.gz` 和 `psfex-3.24.2`
 ```bash
 cd psfex-3.24.2
