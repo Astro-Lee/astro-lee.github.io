@@ -15,7 +15,7 @@ gpg --armor --export id
 dpkg-source --commit
 debuild -S -sa -k$DEBSIGN_KEYID | tee /tmp/debuild.log 2>&1
 dupload XXX.changes
-dput ppa:ruizhi-li/ppa XXX.changes
+dput -f ppa:ruizhi-li/astrosoftware XXX.changes
 ```
 
 # 参考
