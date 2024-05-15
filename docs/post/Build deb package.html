@@ -9,7 +9,38 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="Build deb package">
+<meta name="description" content="本文介绍 deb 的构建方式
+
+# 前期准备
+## 创建GPG公钥和私钥
+```bash
+gpg --full-generate-key --expert
+# 记住私钥的密码
+```
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/a9ba85af-5f40-41c8-b814-a96de04927aa)
+
+```bash
+gpg --armor --export GPG密钥ID
+```
+复制以 `-----BEGIN PGP PUBLIC KEY BLOCK-----` 开头并以 `-----END PGP PUBLIC KEY BLOCK-----` 结尾的 GPG 密钥。">
+<meta property="og:title" content="Build deb package">
+<meta property="og:description" content="本文介绍 deb 的构建方式
+
+# 前期准备
+## 创建GPG公钥和私钥
+```bash
+gpg --full-generate-key --expert
+# 记住私钥的密码
+```
+![image](https://github.com/Astro-Lee/astro-lee.github.io/assets/61745903/a9ba85af-5f40-41c8-b814-a96de04927aa)
+
+```bash
+gpg --armor --export GPG密钥ID
+```
+复制以 `-----BEGIN PGP PUBLIC KEY BLOCK-----` 开头并以 `-----END PGP PUBLIC KEY BLOCK-----` 结尾的 GPG 密钥。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://astro-lee.github.io/post/Build%20deb%20package.html">
+<meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
 <title>Build deb package</title>
 <link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
@@ -43,7 +74,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <div id="header">
 <h1 class="postTitle">Build deb package</h1>
 <div class="title-right">
-    <a href="https://Astro-Lee.github.io/astro-lee.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+    <a href="https://astro-lee.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
         <svg class="octicon" width="16" height="16">
             <path id="pathHome" fill-rule="evenodd"></path>
         </svg>
@@ -117,7 +148,7 @@ dput -f ppa:ruizhi-li/XXXsoftware XXX.changes
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
 </div>
-    <div id="footer">Copyright © <span id="year"></span><a href="https://Astro-Lee.github.io/astro-lee.github.io"> Blog Title </a>
+    <div id="footer">Copyright © <span id="year"></span><a href="https://astro-lee.github.io"> Blog Title </a>
 <p>
 <span id="runday"></span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a>
 </p>
