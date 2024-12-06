@@ -113,7 +113,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-s1">p_value</span> <span class="pl-c1">=</span> <span class="pl-c1">0.05</span>
 
 <span class="pl-c"># 将p值转换为sigma水平</span>
-<span class="pl-s1">sigma_level</span> <span class="pl-c1">=</span> <span class="pl-s1">stats</span>.<span class="pl-s1">norm</span>.<span class="pl-en">ppf</span>(<span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">p_value</span> <span class="pl-c1">/</span> <span class="pl-c1">2</span>)  <span class="pl-c"># 双尾检验</span>
+<span class="pl-s1">sigma_level</span> <span class="pl-c1">=</span> <span class="pl-s1">stats</span>.<span class="pl-c1">norm</span>.<span class="pl-c1">ppf</span>(<span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">p_value</span> <span class="pl-c1">/</span> <span class="pl-c1">2</span>)  <span class="pl-c"># 双尾检验</span>
 <span class="pl-s1">sigma_level</span></pre></div>
 <p>在这个示例中，p值为0.05对应于双尾检验中的大约1.96个sigma。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
