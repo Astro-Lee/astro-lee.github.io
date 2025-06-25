@@ -1,1 +1,3 @@
 - [A web interface dealing with stellar isochrones and their derivatives (CMD)](http://stev.oapd.inaf.it/cgi-bin/cmd)
+- [Demonstrations of MCMC and Nested Samplers in Physics](https://mo-ghani.github.io/Sampling/)
+- [THE ONLINE MCMC](https://www.theonlinemcmc.com/)
