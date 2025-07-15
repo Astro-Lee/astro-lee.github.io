@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Thu, 10 Jul 2025 08:04:43 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>gfortran</title><link>https://astro-lee.github.io/post/gfortran.html</link><description>```
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Tue, 15 Jul 2025 08:24:24 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>gfortran</title><link>https://astro-lee.github.io/post/gfortran.html</link><description>```
 env -i HOME=$HOME PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin \
 TERM=$TERM SHELL=/bin/bash \
 DYLD_LIBRARY_PATH=/opt/homebrew/lib \
@@ -50,16 +50,22 @@ ax.set_ylabel('Y-axis')&#13;
 &#13;
 # 显示图像&#13;
 plt.show()&#13;
-```。</description><guid isPermaLink="true">https://astro-lee.github.io/post/matplotlib%20figsize.html</guid><pubDate>Tue, 14 Jan 2025 09:46:35 +0000</pubDate></item><item><title>hc = 12.39842 Angstrom keV</title><link>https://astro-lee.github.io/post/hc%20%3D%2012.39842%20Angstrom%20keV.html</link><description>```python&#13;
-from astropy.constants import h, c&#13;
-from astropy import units as u&#13;
-&#13;
-# Calculate hc in keV*Å&#13;
-hc = (h * c).to(u.keV * u.angstrom)&#13;
-print(hc)&#13;
-```&#13;
-&#13;
-`hc = 12.398419739640715 Angstrom keV`。</description><guid isPermaLink="true">https://astro-lee.github.io/post/hc%20%3D%2012.39842%20Angstrom%20keV.html</guid><pubDate>Thu, 26 Dec 2024 07:51:24 +0000</pubDate></item><item><title>Link</title><link>https://astro-lee.github.io/post/Link.html</link><description>- [A web interface dealing with stellar isochrones and their derivatives (CMD)](http://stev.oapd.inaf.it/cgi-bin/cmd)
+```。</description><guid isPermaLink="true">https://astro-lee.github.io/post/matplotlib%20figsize.html</guid><pubDate>Tue, 14 Jan 2025 09:46:35 +0000</pubDate></item><item><title>hc = 12.39842 Angstrom keV</title><link>https://astro-lee.github.io/post/hc%20%3D%2012.39842%20Angstrom%20keV.html</link><description>```python
+from astropy.constants import h, c
+from astropy import units as u
+
+# Calculate hc in keV*Å
+hc = (h * c).to(u.keV * u.angstrom)
+print(hc)
+```
+
+`hc = 12.398419739640715 Angstrom keV`
+
+```python
+from astropy import units as u
+(1 * u.erg / u.cm**2 / u.s).to(u.mJy, equivalencies=u.spectral_density(1. * u.keV))
+```
+`413566769.6923858 mJy`。</description><guid isPermaLink="true">https://astro-lee.github.io/post/hc%20%3D%2012.39842%20Angstrom%20keV.html</guid><pubDate>Thu, 26 Dec 2024 07:51:24 +0000</pubDate></item><item><title>Link</title><link>https://astro-lee.github.io/post/Link.html</link><description>- [A web interface dealing with stellar isochrones and their derivatives (CMD)](http://stev.oapd.inaf.it/cgi-bin/cmd)
 - [Demonstrations of MCMC and Nested Samplers in Physics](https://mo-ghani.github.io/Sampling/)
 - [THE ONLINE MCMC](https://www.theonlinemcmc.com/)
 - [定投计算器](https://danjuanfunds.com/calculator/danjuan)。</description><guid isPermaLink="true">https://astro-lee.github.io/post/Link.html</guid><pubDate>Wed, 16 Oct 2024 01:45:23 +0000</pubDate></item><item><title>Error Propagation in the Ratio NH/E(B − V)</title><link>https://astro-lee.github.io/post/Error%20Propagation%20in%20the%20Ratio%20NH-E%28B%20%E2%88%92%20V%29.html</link><description># [Variations of Interstellar Gas-to-dust Ratios at High Galactic Latitudes](https://ui.adsabs.harvard.edu/abs/2024ApJ...961..204S/abstract)&#13;
