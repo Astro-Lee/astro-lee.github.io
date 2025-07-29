@@ -43,72 +43,62 @@ z = \frac{\Delta}{\sigma_{\Delta}} = \frac{0.054}{0.0301} \approx 1.79
 
 ```python
 import numpy as np
-from scipy.stats import norm
+from scipy.stats import chi2, norm
 
-# Define the measurements
-alpha_X = 1.286
-sigma_X = 0.030
-alpha_O = 1.340
-sigma_O = 0.002
+# P-value to sigma
+def p_value_to_sigma(p_value):
+    """Convert p-value to sigma level."""
+    return norm.ppf(1 - p_value / 2)
 
-# Calculate the difference
-delta = alpha_O - alpha_X
+# Given decay indices and their uncertainties
+alpha_x = 1.286
+sigma_x = 0.030
 
-# Calculate the combined uncertainty
-sigma_delta = np.sqrt(sigma_X**2 + sigma_O**2)
+alpha_o = 1.340
+sigma_o = 0.002
 
-# Calculate the z-score
-z = delta / sigma_delta
-
-# Calculate the p-value for a two-tailed test
-p_value = 2 * (1 - norm.cdf(np.abs(z)))
-
-# Print the results
-print(f"Difference: {delta:.4f}")
-print(f"Combined uncertainty: {sigma_delta:.4f}")
-print(f"Z-score: {z:.4f}")
-print(f"P-value: {p_value:.4f}")
-
-# Check if consistent at 5% significance level
-if p_value > 0.05:
-    print("The measurements are consistent.")
-else:
-    print("The measurements are not consistent.")
-```
-
-```python
-import numpy as np
-from scipy.stats import chi2
-
-# Define measurements and their uncertainties
-measurements = np.array([1.286, 1.340])  # Example values: alpha_X, alpha_O
-uncertainties = np.array([0.030, 0.002])  # Corresponding uncertainties: sigma_X, sigma_O
+alphas = np.array([alpha_x, alpha_o])
 
 # Calculate weights (w_i = 1 / sigma_i^2)
-weights = 1 / uncertainties**2
+weights = np.array([1 / sigma_x**2, 1 / sigma_o**2])
 
 # Compute weighted average
-alpha_best = np.sum(weights * measurements) / np.sum(weights)
+weighted_avg = weights @ alphas / np.sum(weights)
+weighted_sigma = np.sqrt(1 / np.sum(weights))
 
-# Calculate chi-squared statistic
-chi2_value = np.sum(((measurements - alpha_best) / uncertainties)**2)
+# chi-squared statistic
+chi2_val = np.sum(((alphas - weighted_avg) ** 2) * weights)
 
 # Degrees of freedom (n - 1, where n is the number of measurements)
-dof = len(measurements) - 1
+dof = len(alphas) - 1
 
-# Calculate p-value
-p_value = 1 - chi2.cdf(chi2_value, dof)
-
-# Print results
-print(f"Weighted Average: {alpha_best:.4f}")
-print(f"Chi-squared Statistic: {chi2_value:.4f}")
-print(f"Degrees of Freedom: {dof}")
-print(f"P-value: {p_value:.4f}")
+# p-value
+p_value = 1 - chi2.cdf(chi2_val, dof)
 
 # Evaluate consistency at 5% significance level
 critical_value = chi2.ppf(0.95, dof)
-if chi2_value < critical_value:
+if chi2_val < critical_value:
     print("The measurements are consistent with the weighted average.")
 else:
     print("The measurements are not consistent with the weighted average.")
+
+{
+    "weighted_average": weighted_avg,
+    "weighted_sigma": weighted_sigma,
+    "chi2_value": chi2_val,
+    "degrees_of_freedom": dof,
+    "p_value": p_value,
+    "sigma_level": p_value_to_sigma(p_value)
+}
+```
+
+```bash
+The measurements are consistent with the weighted average.
+
+{'weighted_average': 1.3397610619469027,
+ 'weighted_sigma': 0.001995570315713218,
+ 'chi2_value': 3.225663716814165,
+ 'degrees_of_freedom': 1,
+ 'p_value': 0.07249240434519022,
+ 'sigma_level': 1.796013284141897}
 ```

@@ -120,71 +120,61 @@ w_X = \frac{1}{(0.030)^2} \approx 1111.11, \quad w_O = \frac{1}{(0.002)^2} = 250
 <p>基于 z 检验（差值约为 1.79 sigma，p ≈ 0.073 &gt; 0.05）和 (\chi^2) 检验，两个测量值在 5% 显著性水平下是一致的。因此，答案是：</p>
 <p>是一致的</p>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
-<span class="pl-k">from</span> <span class="pl-s1">scipy</span>.<span class="pl-s1">stats</span> <span class="pl-k">import</span> <span class="pl-s1">norm</span>
+<span class="pl-k">from</span> <span class="pl-s1">scipy</span>.<span class="pl-s1">stats</span> <span class="pl-k">import</span> <span class="pl-s1">chi2</span>, <span class="pl-s1">norm</span>
 
-<span class="pl-c"># Define the measurements</span>
-<span class="pl-s1">alpha_X</span> <span class="pl-c1">=</span> <span class="pl-c1">1.286</span>
-<span class="pl-s1">sigma_X</span> <span class="pl-c1">=</span> <span class="pl-c1">0.030</span>
-<span class="pl-s1">alpha_O</span> <span class="pl-c1">=</span> <span class="pl-c1">1.340</span>
-<span class="pl-s1">sigma_O</span> <span class="pl-c1">=</span> <span class="pl-c1">0.002</span>
+<span class="pl-c"># P-value to sigma</span>
+<span class="pl-k">def</span> <span class="pl-en">p_value_to_sigma</span>(<span class="pl-s1">p_value</span>):
+    <span class="pl-s">"""Convert p-value to sigma level."""</span>
+    <span class="pl-k">return</span> <span class="pl-s1">norm</span>.<span class="pl-c1">ppf</span>(<span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">p_value</span> <span class="pl-c1">/</span> <span class="pl-c1">2</span>)
 
-<span class="pl-c"># Calculate the difference</span>
-<span class="pl-s1">delta</span> <span class="pl-c1">=</span> <span class="pl-s1">alpha_O</span> <span class="pl-c1">-</span> <span class="pl-s1">alpha_X</span>
+<span class="pl-c"># Given decay indices and their uncertainties</span>
+<span class="pl-s1">alpha_x</span> <span class="pl-c1">=</span> <span class="pl-c1">1.286</span>
+<span class="pl-s1">sigma_x</span> <span class="pl-c1">=</span> <span class="pl-c1">0.030</span>
 
-<span class="pl-c"># Calculate the combined uncertainty</span>
-<span class="pl-s1">sigma_delta</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">sqrt</span>(<span class="pl-s1">sigma_X</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-c1">+</span> <span class="pl-s1">sigma_O</span><span class="pl-c1">**</span><span class="pl-c1">2</span>)
+<span class="pl-s1">alpha_o</span> <span class="pl-c1">=</span> <span class="pl-c1">1.340</span>
+<span class="pl-s1">sigma_o</span> <span class="pl-c1">=</span> <span class="pl-c1">0.002</span>
 
-<span class="pl-c"># Calculate the z-score</span>
-<span class="pl-s1">z</span> <span class="pl-c1">=</span> <span class="pl-s1">delta</span> <span class="pl-c1">/</span> <span class="pl-s1">sigma_delta</span>
-
-<span class="pl-c"># Calculate the p-value for a two-tailed test</span>
-<span class="pl-s1">p_value</span> <span class="pl-c1">=</span> <span class="pl-c1">2</span> <span class="pl-c1">*</span> (<span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">norm</span>.<span class="pl-c1">cdf</span>(<span class="pl-s1">np</span>.<span class="pl-c1">abs</span>(<span class="pl-s1">z</span>)))
-
-<span class="pl-c"># Print the results</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"Difference: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">delta</span>:.4f<span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"Combined uncertainty: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">sigma_delta</span>:.4f<span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"Z-score: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">z</span>:.4f<span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"P-value: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">p_value</span>:.4f<span class="pl-kos">}</span></span>"</span>)
-
-<span class="pl-c"># Check if consistent at 5% significance level</span>
-<span class="pl-k">if</span> <span class="pl-s1">p_value</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0.05</span>:
-    <span class="pl-en">print</span>(<span class="pl-s">"The measurements are consistent."</span>)
-<span class="pl-k">else</span>:
-    <span class="pl-en">print</span>(<span class="pl-s">"The measurements are not consistent."</span>)</pre></div>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
-<span class="pl-k">from</span> <span class="pl-s1">scipy</span>.<span class="pl-s1">stats</span> <span class="pl-k">import</span> <span class="pl-s1">chi2</span>
-
-<span class="pl-c"># Define measurements and their uncertainties</span>
-<span class="pl-s1">measurements</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([<span class="pl-c1">1.286</span>, <span class="pl-c1">1.340</span>])  <span class="pl-c"># Example values: alpha_X, alpha_O</span>
-<span class="pl-s1">uncertainties</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([<span class="pl-c1">0.030</span>, <span class="pl-c1">0.002</span>])  <span class="pl-c"># Corresponding uncertainties: sigma_X, sigma_O</span>
+<span class="pl-s1">alphas</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([<span class="pl-s1">alpha_x</span>, <span class="pl-s1">alpha_o</span>])
 
 <span class="pl-c"># Calculate weights (w_i = 1 / sigma_i^2)</span>
-<span class="pl-s1">weights</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span> <span class="pl-c1">/</span> <span class="pl-s1">uncertainties</span><span class="pl-c1">**</span><span class="pl-c1">2</span>
+<span class="pl-s1">weights</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>([<span class="pl-c1">1</span> <span class="pl-c1">/</span> <span class="pl-s1">sigma_x</span><span class="pl-c1">**</span><span class="pl-c1">2</span>, <span class="pl-c1">1</span> <span class="pl-c1">/</span> <span class="pl-s1">sigma_o</span><span class="pl-c1">**</span><span class="pl-c1">2</span>])
 
 <span class="pl-c"># Compute weighted average</span>
-<span class="pl-s1">alpha_best</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">sum</span>(<span class="pl-s1">weights</span> <span class="pl-c1">*</span> <span class="pl-s1">measurements</span>) <span class="pl-c1">/</span> <span class="pl-s1">np</span>.<span class="pl-c1">sum</span>(<span class="pl-s1">weights</span>)
+<span class="pl-s1">weighted_avg</span> <span class="pl-c1">=</span> <span class="pl-s1">weights</span> @ <span class="pl-s1">alphas</span> <span class="pl-c1">/</span> <span class="pl-s1">np</span>.<span class="pl-c1">sum</span>(<span class="pl-s1">weights</span>)
+<span class="pl-s1">weighted_sigma</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">sqrt</span>(<span class="pl-c1">1</span> <span class="pl-c1">/</span> <span class="pl-s1">np</span>.<span class="pl-c1">sum</span>(<span class="pl-s1">weights</span>))
 
-<span class="pl-c"># Calculate chi-squared statistic</span>
-<span class="pl-s1">chi2_value</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">sum</span>(((<span class="pl-s1">measurements</span> <span class="pl-c1">-</span> <span class="pl-s1">alpha_best</span>) <span class="pl-c1">/</span> <span class="pl-s1">uncertainties</span>)<span class="pl-c1">**</span><span class="pl-c1">2</span>)
+<span class="pl-c"># chi-squared statistic</span>
+<span class="pl-s1">chi2_val</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">sum</span>(((<span class="pl-s1">alphas</span> <span class="pl-c1">-</span> <span class="pl-s1">weighted_avg</span>) <span class="pl-c1">**</span> <span class="pl-c1">2</span>) <span class="pl-c1">*</span> <span class="pl-s1">weights</span>)
 
 <span class="pl-c"># Degrees of freedom (n - 1, where n is the number of measurements)</span>
-<span class="pl-s1">dof</span> <span class="pl-c1">=</span> <span class="pl-en">len</span>(<span class="pl-s1">measurements</span>) <span class="pl-c1">-</span> <span class="pl-c1">1</span>
+<span class="pl-s1">dof</span> <span class="pl-c1">=</span> <span class="pl-en">len</span>(<span class="pl-s1">alphas</span>) <span class="pl-c1">-</span> <span class="pl-c1">1</span>
 
-<span class="pl-c"># Calculate p-value</span>
-<span class="pl-s1">p_value</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">chi2</span>.<span class="pl-c1">cdf</span>(<span class="pl-s1">chi2_value</span>, <span class="pl-s1">dof</span>)
-
-<span class="pl-c"># Print results</span>
-<span class="pl-en">print</span>(<span class="pl-s">f"Weighted Average: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">alpha_best</span>:.4f<span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"Chi-squared Statistic: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">chi2_value</span>:.4f<span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"Degrees of Freedom: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">dof</span><span class="pl-kos">}</span></span>"</span>)
-<span class="pl-en">print</span>(<span class="pl-s">f"P-value: <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">p_value</span>:.4f<span class="pl-kos">}</span></span>"</span>)
+<span class="pl-c"># p-value</span>
+<span class="pl-s1">p_value</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">chi2</span>.<span class="pl-c1">cdf</span>(<span class="pl-s1">chi2_val</span>, <span class="pl-s1">dof</span>)
 
 <span class="pl-c"># Evaluate consistency at 5% significance level</span>
 <span class="pl-s1">critical_value</span> <span class="pl-c1">=</span> <span class="pl-s1">chi2</span>.<span class="pl-c1">ppf</span>(<span class="pl-c1">0.95</span>, <span class="pl-s1">dof</span>)
-<span class="pl-k">if</span> <span class="pl-s1">chi2_value</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">critical_value</span>:
+<span class="pl-k">if</span> <span class="pl-s1">chi2_val</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">critical_value</span>:
     <span class="pl-en">print</span>(<span class="pl-s">"The measurements are consistent with the weighted average."</span>)
 <span class="pl-k">else</span>:
-    <span class="pl-en">print</span>(<span class="pl-s">"The measurements are not consistent with the weighted average."</span>)</pre></div></div>
+    <span class="pl-en">print</span>(<span class="pl-s">"The measurements are not consistent with the weighted average."</span>)
+
+{
+    <span class="pl-s">"weighted_average"</span>: <span class="pl-s1">weighted_avg</span>,
+    <span class="pl-s">"weighted_sigma"</span>: <span class="pl-s1">weighted_sigma</span>,
+    <span class="pl-s">"chi2_value"</span>: <span class="pl-s1">chi2_val</span>,
+    <span class="pl-s">"degrees_of_freedom"</span>: <span class="pl-s1">dof</span>,
+    <span class="pl-s">"p_value"</span>: <span class="pl-s1">p_value</span>,
+    <span class="pl-s">"sigma_level"</span>: <span class="pl-en">p_value_to_sigma</span>(<span class="pl-s1">p_value</span>)
+}</pre></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate">The measurements are consistent with the weighted average.
+
+{<span class="pl-s"><span class="pl-pds">'</span>weighted_average<span class="pl-pds">'</span></span>: 1.3397610619469027,
+ <span class="pl-s"><span class="pl-pds">'</span>weighted_sigma<span class="pl-pds">'</span></span>: 0.001995570315713218,
+ <span class="pl-s"><span class="pl-pds">'</span>chi2_value<span class="pl-pds">'</span></span>: 3.225663716814165,
+ <span class="pl-s"><span class="pl-pds">'</span>degrees_of_freedom<span class="pl-pds">'</span></span>: 1,
+ <span class="pl-s"><span class="pl-pds">'</span>p_value<span class="pl-pds">'</span></span>: 0.07249240434519022,
+ <span class="pl-s"><span class="pl-pds">'</span>sigma_level<span class="pl-pds">'</span></span>: 1.796013284141897}</pre></div></div>
 <div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
