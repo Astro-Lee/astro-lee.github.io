@@ -86,9 +86,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="markdown-body" id="postBody"><p>要验证两个变量 (\alpha_\mathrm{obs,X} = 1.286 \pm 0.030) 和 (\alpha_\mathrm{obs,O} = 1.340 \pm 0.002) 是否一致，我们需要检查它们的测量值在考虑到不确定度的情况下是否兼容。通常在物理学中，如果两个测量的差值相对于它们的联合不确定度足够小（例如小于某个显著性水平），我们就认为它们是一致的。</p>
 <h3>第一步：计算差值</h3>
 <p>首先，计算两个测量值的差值：<br>
-$<br>
-\Delta = \alpha_\mathrm{obs,O} - \alpha_\mathrm{obs,X} = 1.340 - 1.286 = 0.054<br>
-$</p>
+$\Delta = \alpha_\mathrm{obs,O} - \alpha_\mathrm{obs,X} = 1.340 - 1.286 = 0.054$</p>
 <h3>第二步：计算联合不确定度</h3>
 <p>由于这两个测量是独立的，不确定度的平方和开根号给出了差值的联合不确定度：<br>
 [<br>
@@ -338,6 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-
+<script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 </html>

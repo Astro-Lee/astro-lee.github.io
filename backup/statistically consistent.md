@@ -2,9 +2,7 @@
 
 ### 第一步：计算差值
 首先，计算两个测量值的差值：
-$
-\Delta = \alpha_\mathrm{obs,O} - \alpha_\mathrm{obs,X} = 1.340 - 1.286 = 0.054
-$
+$\Delta = \alpha_\mathrm{obs,O} - \alpha_\mathrm{obs,X} = 1.340 - 1.286 = 0.054$
 
 ### 第二步：计算联合不确定度
 由于这两个测量是独立的，不确定度的平方和开根号给出了差值的联合不确定度：
