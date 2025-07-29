@@ -76,3 +76,39 @@ else:
     print("The measurements are not consistent.")
 ```
 
+```python
+import numpy as np
+from scipy.stats import chi2
+
+# Define measurements and their uncertainties
+measurements = np.array([1.286, 1.340])  # Example values: alpha_X, alpha_O
+uncertainties = np.array([0.030, 0.002])  # Corresponding uncertainties: sigma_X, sigma_O
+
+# Calculate weights (w_i = 1 / sigma_i^2)
+weights = 1 / uncertainties**2
+
+# Compute weighted average
+alpha_best = np.sum(weights * measurements) / np.sum(weights)
+
+# Calculate chi-squared statistic
+chi2_value = np.sum(((measurements - alpha_best) / uncertainties)**2)
+
+# Degrees of freedom (n - 1, where n is the number of measurements)
+dof = len(measurements) - 1
+
+# Calculate p-value
+p_value = 1 - chi2.cdf(chi2_value, dof)
+
+# Print results
+print(f"Weighted Average: {alpha_best:.4f}")
+print(f"Chi-squared Statistic: {chi2_value:.4f}")
+print(f"Degrees of Freedom: {dof}")
+print(f"P-value: {p_value:.4f}")
+
+# Evaluate consistency at 5% significance level
+critical_value = chi2.ppf(0.95, dof)
+if chi2_value < critical_value:
+    print("The measurements are consistent with the weighted average.")
+else:
+    print("The measurements are not consistent with the weighted average.")
+```
