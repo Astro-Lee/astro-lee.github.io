@@ -1,45 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Mon, 04 Aug 2025 09:05:48 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>Multi-SBPL Function</title><link>https://astro-lee.github.io/post/Multi-SBPL%20Function.html</link><description>$f(x) = A\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Mon, 04 Aug 2025 09:17:15 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>Multi-SBPL Function</title><link>https://astro-lee.github.io/post/Multi-SBPL%20Function.html</link><description>$f(x) = A\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
 
-```python
-import numpy as np
-
-def multi_sbpl(x, A, breakpoints, alphas, deltas):
-    '''
-    多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
-    参数:
-        x: 自变量 (array-like)
-        A: 归一化常数
-        breakpoints: 拐点列表 [xb1, xb2, ..., xb(n-1)]
-        alphas: 正的幂律指数绝对值列表 [alpha1, alpha2, ..., alphan]
-        deltas: 平滑参数列表 [delta1, delta2, ..., delta(n-1)]
-    返回:
-        f(x): SBPL 函数值
-    '''
-    x = np.array(x)
-    # 初始幂律指数为 -alpha1
-    result = A * x**(-alphas[0])
-    # 计算每个拐点的平滑过渡
-    for i in range(len(breakpoints)):
-        term = 1 + (x / breakpoints[i])**(1 / deltas[i])
-        # 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)
-        result *= term**(-deltas[i] * (alphas[i + 1] - alphas[i]))
-    return result
-
-# 示例：三段 SBPL
-x = np.logspace(-1, 5, 1000)
-A = 1.0
-deltas = [0.1, 0.1]       # 两个平滑参数
-breakpoints = [200, 5000]  # 两个拐点
-alphas = [2.5, 1., 3.5]  # 三个幂律指数
-y = multi_sbpl(x, A, breakpoints, alphas, deltas)
-
-plt.plot(x, y)
-plt.xscale('log')
-plt.yscale('log')
-```
-
-&lt;img width='649' height='614' alt='Image' src='https://github.com/user-attachments/assets/3797235b-86c4-4556-868e-3af40e2ea4e2' /&gt;。</description><guid isPermaLink="true">https://astro-lee.github.io/post/Multi-SBPL%20Function.html</guid><pubDate>Mon, 04 Aug 2025 09:05:13 +0000</pubDate></item><item><title>statistically consistent</title><link>https://astro-lee.github.io/post/statistically%20consistent.html</link><description>要验证两个变量 $\alpha_\mathrm{obs,X} = 1.286 \pm 0.030$ 和 $\alpha_\mathrm{obs,O} = 1.340 \pm 0.002$ 是否一致，我们需要检查它们的测量值在考虑到不确定度的情况下是否兼容。</description><guid isPermaLink="true">https://astro-lee.github.io/post/statistically%20consistent.html</guid><pubDate>Tue, 29 Jul 2025 02:40:51 +0000</pubDate></item><item><title>gfortran</title><link>https://astro-lee.github.io/post/gfortran.html</link><description>```
+其中：
+- $A$: 归一化常数。</description><guid isPermaLink="true">https://astro-lee.github.io/post/Multi-SBPL%20Function.html</guid><pubDate>Mon, 04 Aug 2025 09:05:13 +0000</pubDate></item><item><title>statistically consistent</title><link>https://astro-lee.github.io/post/statistically%20consistent.html</link><description>要验证两个变量 $\alpha_\mathrm{obs,X} = 1.286 \pm 0.030$ 和 $\alpha_\mathrm{obs,O} = 1.340 \pm 0.002$ 是否一致，我们需要检查它们的测量值在考虑到不确定度的情况下是否兼容。</description><guid isPermaLink="true">https://astro-lee.github.io/post/statistically%20consistent.html</guid><pubDate>Tue, 29 Jul 2025 02:40:51 +0000</pubDate></item><item><title>gfortran</title><link>https://astro-lee.github.io/post/gfortran.html</link><description>```
 env -i HOME=$HOME PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin \
 TERM=$TERM SHELL=/bin/bash \
 DYLD_LIBRARY_PATH=/opt/homebrew/lib \
