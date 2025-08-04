@@ -2,10 +2,10 @@ $f(x) = A\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}
 
 其中：
 - $A$: 归一化常数。
-- $x_{bi}$: 第 $i$ 个拐点，满足 $x_{b1} < x_{b2} < \dots < x_{b(n-1)}$。
+- $x_{bi}$: 第 $i$ 个拐点，满足 $x_{b1} < x_{b2} < \dots < x_{b(n-1)}$ 。
 - $\alpha_i$: 正数，表示第 $i$ 个区间的幂律指数的绝对值（实际指数为 $-\alpha_i$).
 - $\delta_i$: 平滑参数，控制第 $i$ 个拐点的过渡宽度。
-- $x > 0$: 自变量，确保幂律定义有效。
+- $x > 0$ : 自变量，确保幂律定义有效。
 
 ```python
 import numpy as np
