@@ -104,6 +104,7 @@ $\delta_i$: 平滑参数，控制第 $i$ 个拐点的过渡宽度。</li>
 $x &amp;gt; 0$ : 自变量，确保幂律定义有效。</li>
 </ul>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span>
+<span class="pl-k">import</span> <span class="pl-s1">matplotlib</span>.<span class="pl-s1">pyplot</span> <span class="pl-k">as</span> <span class="pl-s1">plt</span>
 
 <span class="pl-k">def</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">x</span>, <span class="pl-c1">A</span>, <span class="pl-s1">breakpoints</span>, <span class="pl-s1">alphas</span>, <span class="pl-s1">deltas</span>):
     <span class="pl-s">"""</span>

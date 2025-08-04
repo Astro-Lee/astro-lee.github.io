@@ -9,6 +9,7 @@ $f(x) = A\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 
 def multi_sbpl(x, A, breakpoints, alphas, deltas):
     """
