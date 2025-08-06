@@ -1,14 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 12:29:40 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
-
-```python
-import pandas as pd
-
-bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
-x_time = bilby_data['x_time']
-x_flux = bilby_data['x_flux']
-x_flux_err = bilby_data['x_flux_err']
-```
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 12:40:17 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
 
 ```python
 def multi_sbpl(x, c, breakpoints, alphas, deltas):
@@ -32,6 +23,15 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
         # 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)
         result *= term**(-deltas[i] * (alphas[i + 1] - alphas[i]))
     return result
+```
+
+```python
+import pandas as pd
+
+bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
+x_time = bilby_data['x_time']
+x_flux = bilby_data['x_flux']
+x_flux_err = bilby_data['x_flux_err']
 ```
 
 ```python
@@ -86,7 +86,10 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
         alpha3 = self.parameters['alpha3']
         log_f = self.parameters['log_f']     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
+        model = multi_sbpl(self.x, c, 
+            breakpoints=[breakpoint1,breakpoint2], 
+            alphas=[alpha1,alpha2,alpha3], 
+            deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)

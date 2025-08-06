@@ -1,15 +1,6 @@
 bilby + PyMultiNest + MultiNest
 
 ```python
-import pandas as pd
-
-bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
-x_time = bilby_data['x_time']
-x_flux = bilby_data['x_flux']
-x_flux_err = bilby_data['x_flux_err']
-```
-
-```python
 def multi_sbpl(x, c, breakpoints, alphas, deltas):
     """
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
@@ -31,6 +22,15 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
         # 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)
         result *= term**(-deltas[i] * (alphas[i + 1] - alphas[i]))
     return result
+```
+
+```python
+import pandas as pd
+
+bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
+x_time = bilby_data['x_time']
+x_flux = bilby_data['x_flux']
+x_flux_err = bilby_data['x_flux_err']
 ```
 
 ```python
@@ -85,7 +85,10 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
         alpha3 = self.parameters["alpha3"]
         log_f = self.parameters["log_f"]     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
+        model = multi_sbpl(self.x, c, 
+            breakpoints=[breakpoint1,breakpoint2], 
+            alphas=[alpha1,alpha2,alpha3], 
+            deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)

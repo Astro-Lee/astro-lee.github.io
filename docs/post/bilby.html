@@ -13,15 +13,6 @@
 <meta name="description" content="bilby + PyMultiNest + MultiNest
 
 ```python
-import pandas as pd
-
-bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
-x_time = bilby_data['x_time']
-x_flux = bilby_data['x_flux']
-x_flux_err = bilby_data['x_flux_err']
-```
-
-```python
 def multi_sbpl(x, c, breakpoints, alphas, deltas):
     '''
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
@@ -43,6 +34,15 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
         # 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)
         result *= term**(-deltas[i] * (alphas[i + 1] - alphas[i]))
     return result
+```
+
+```python
+import pandas as pd
+
+bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
+x_time = bilby_data['x_time']
+x_flux = bilby_data['x_flux']
+x_flux_err = bilby_data['x_flux_err']
 ```
 
 ```python
@@ -97,7 +97,10 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
         alpha3 = self.parameters['alpha3']
         log_f = self.parameters['log_f']     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
+        model = multi_sbpl(self.x, c, 
+            breakpoints=[breakpoint1,breakpoint2], 
+            alphas=[alpha1,alpha2,alpha3], 
+            deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)
@@ -203,15 +206,6 @@ $\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} \approx 20$
 <meta property="og:description" content="bilby + PyMultiNest + MultiNest
 
 ```python
-import pandas as pd
-
-bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
-x_time = bilby_data['x_time']
-x_flux = bilby_data['x_flux']
-x_flux_err = bilby_data['x_flux_err']
-```
-
-```python
 def multi_sbpl(x, c, breakpoints, alphas, deltas):
     '''
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
@@ -233,6 +227,15 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
         # 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)
         result *= term**(-deltas[i] * (alphas[i + 1] - alphas[i]))
     return result
+```
+
+```python
+import pandas as pd
+
+bilby_data = pd.read_csv('https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv')
+x_time = bilby_data['x_time']
+x_flux = bilby_data['x_flux']
+x_flux_err = bilby_data['x_flux_err']
 ```
 
 ```python
@@ -287,7 +290,10 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
         alpha3 = self.parameters['alpha3']
         log_f = self.parameters['log_f']     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
+        model = multi_sbpl(self.x, c, 
+            breakpoints=[breakpoint1,breakpoint2], 
+            alphas=[alpha1,alpha2,alpha3], 
+            deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)
@@ -460,12 +466,6 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><p>bilby + PyMultiNest + MultiNest</p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">pandas</span> <span class="pl-k">as</span> <span class="pl-s1">pd</span>
-
-<span class="pl-s1">bilby_data</span> <span class="pl-c1">=</span> <span class="pl-s1">pd</span>.<span class="pl-c1">read_csv</span>(<span class="pl-s">'https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv'</span>)
-<span class="pl-s1">x_time</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby_data</span>[<span class="pl-s">'x_time'</span>]
-<span class="pl-s1">x_flux</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby_data</span>[<span class="pl-s">'x_flux'</span>]
-<span class="pl-s1">x_flux_err</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby_data</span>[<span class="pl-s">'x_flux_err'</span>]</pre></div>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">def</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span>, <span class="pl-s1">alphas</span>, <span class="pl-s1">deltas</span>):
     <span class="pl-s">"""</span>
 <span class="pl-s">    多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)</span>
@@ -487,6 +487,12 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         <span class="pl-c"># 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)</span>
         <span class="pl-s1">result</span> <span class="pl-c1">*=</span> <span class="pl-s1">term</span><span class="pl-c1">**</span>(<span class="pl-c1">-</span><span class="pl-s1">deltas</span>[<span class="pl-s1">i</span>] <span class="pl-c1">*</span> (<span class="pl-s1">alphas</span>[<span class="pl-s1">i</span> <span class="pl-c1">+</span> <span class="pl-c1">1</span>] <span class="pl-c1">-</span> <span class="pl-s1">alphas</span>[<span class="pl-s1">i</span>]))
     <span class="pl-k">return</span> <span class="pl-s1">result</span></pre></div>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">pandas</span> <span class="pl-k">as</span> <span class="pl-s1">pd</span>
+
+<span class="pl-s1">bilby_data</span> <span class="pl-c1">=</span> <span class="pl-s1">pd</span>.<span class="pl-c1">read_csv</span>(<span class="pl-s">'https://gitee.com/Astro-Lee/storage/raw/master/bilby_data.csv'</span>)
+<span class="pl-s1">x_time</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby_data</span>[<span class="pl-s">'x_time'</span>]
+<span class="pl-s1">x_flux</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby_data</span>[<span class="pl-s">'x_flux'</span>]
+<span class="pl-s1">x_flux_err</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby_data</span>[<span class="pl-s">'x_flux_err'</span>]</pre></div>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">os</span>
 <span class="pl-c"># 设置 DYLD_LIBRARY_PATH（适用于 macOS）</span>
 <span class="pl-s1">multinest_lib_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-c1">expanduser</span>(<span class="pl-s">"~/Downloads/MultiNest/lib"</span>)
@@ -535,7 +541,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         <span class="pl-s1">alpha3</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"alpha3"</span>]
         <span class="pl-s1">log_f</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"log_f"</span>]     
 
-        <span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">self</span>.<span class="pl-c1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span><span class="pl-c1">=</span>[<span class="pl-s1">breakpoint1</span>,<span class="pl-s1">breakpoint2</span>], <span class="pl-s1">alphas</span><span class="pl-c1">=</span>[<span class="pl-s1">alpha1</span>,<span class="pl-s1">alpha2</span>,<span class="pl-s1">alpha3</span>], <span class="pl-s1">deltas</span><span class="pl-c1">=</span>[<span class="pl-c1">0.1</span>,<span class="pl-c1">0.1</span>])
+        <span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">self</span>.<span class="pl-c1">x</span>, <span class="pl-s1">c</span>, 
+            <span class="pl-s1">breakpoints</span><span class="pl-c1">=</span>[<span class="pl-s1">breakpoint1</span>,<span class="pl-s1">breakpoint2</span>], 
+            <span class="pl-s1">alphas</span><span class="pl-c1">=</span>[<span class="pl-s1">alpha1</span>,<span class="pl-s1">alpha2</span>,<span class="pl-s1">alpha3</span>], 
+            <span class="pl-s1">deltas</span><span class="pl-c1">=</span>[<span class="pl-c1">0.1</span>,<span class="pl-c1">0.1</span>])
 
         <span class="pl-s1">res</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">y</span> <span class="pl-c1">-</span> <span class="pl-s1">model</span>
         <span class="pl-s1">sigma2</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">yerr</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-c1">+</span> <span class="pl-s1">model</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-s1">np</span>.<span class="pl-c1">exp</span>(<span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-s1">log_f</span>)
