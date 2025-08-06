@@ -100,7 +100,7 @@ priors = dict(
     c = bilby.core.prior.Uniform(-4, -3, "k",r"$c$"),
     breakpoint1 = bilby.core.prior.Uniform(200, 500, "breakpoint1",r"$breakpoint1$"),
     breakpoint2 = bilby.core.prior.Uniform(500,10000, "breakpoint2",r"$breakpoint2$"),
-    alpha1 = bilby.core.prior.Uniform(0, 0.5, "alpha1",r"$alpha1$"),
+    alpha1 = bilby.core.prior.Uniform(-1, 1, "alpha1",r"$alpha1$"),
     alpha2 = bilby.core.prior.Uniform(1, 2, "alpha2", r"$alpha2$"),
     alpha3 = bilby.core.prior.Uniform(1, 2, "alpha3", r"$alpha3$"),
     log_f = bilby.core.prior.Uniform(-10., 1., "log_f", r"$\log f_\mathrm{sys}$"),
@@ -134,7 +134,7 @@ labels=[prior_dist.latex_label for key, prior_dist in priors.items()]
 )
 ```
 
-<img width="1578" height="1600" alt="Image" src="https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14" />
+<img width="1578" height="1600" alt="Image" src="https://github.com/user-attachments/assets/ed77ce4b-7ed3-4d2c-9b49-35d36ee72ccb" />
 
 ```python
 print(label)
@@ -156,15 +156,15 @@ for col in quantile_tab.columns[:-2]:
 输出结果
 ```bash
 # 10keV-2broken
-# log Z = 12270.855083203984 ± 0.09596729206594165
+# log Z = 12270.607387903234 ± 0.09746941609724716
 
-# c = -3.511708 (+0.095322/-0.053394)
-# breakpoint1 = 282.401849 (+9.890989/-9.029383)
-# breakpoint2 = 1364.632182 (+445.765043/-317.448853)
-# alpha1 = 0.033560 (+0.042786/-0.024177)
-# alpha2 = 1.281681 (+0.028755/-0.032431)
-# alpha3 = 1.551975 (+0.027622/-0.023177)
-# log_f = -1.431941 (+0.029968/-0.028908)
+# c = -3.661216 (+0.147197/-0.145641)
+# breakpoint1 = 272.599363 (+12.038642/-11.232960)
+# breakpoint2 = 1325.521828 (+424.605908/-306.887697)
+# alpha1 = -0.033724 (+0.066284/-0.066135)
+# alpha2 = 1.273952 (+0.029515/-0.033641)
+# alpha3 = 1.550395 (+0.028099/-0.022251)
+# log_f = -1.433169 (+0.029608/-0.029620)
 
 # 10keV-1broken
 # log Z = 12250.889339996882 ± 0.08563383228929447
@@ -176,7 +176,7 @@ for col in quantile_tab.columns[:-2]:
 # log_f = -1.400355 (+0.028854/-0.029786)
 ```
 计算对数贝叶斯因子（ln Bayes Factor）
-$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} \approx 20$
 
 根据 Jeffreys scale 判断
 | ln(Bayes Factor)      | 强度解释（Jeffreys scale)          |
@@ -215,4 +215,4 @@ ax['lc'].set_ylabel('Flux density [Jy]')
 ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
 
-<img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f" />
+<img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/434879b7-7d8d-496f-a2c6-9421995a18a7" />

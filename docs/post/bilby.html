@@ -112,7 +112,7 @@ priors = dict(
     c = bilby.core.prior.Uniform(-4, -3, 'k',r'$c$'),
     breakpoint1 = bilby.core.prior.Uniform(200, 500, 'breakpoint1',r'$breakpoint1$'),
     breakpoint2 = bilby.core.prior.Uniform(500,10000, 'breakpoint2',r'$breakpoint2$'),
-    alpha1 = bilby.core.prior.Uniform(0, 0.5, 'alpha1',r'$alpha1$'),
+    alpha1 = bilby.core.prior.Uniform(-1, 1, 'alpha1',r'$alpha1$'),
     alpha2 = bilby.core.prior.Uniform(1, 2, 'alpha2', r'$alpha2$'),
     alpha3 = bilby.core.prior.Uniform(1, 2, 'alpha3', r'$alpha3$'),
     log_f = bilby.core.prior.Uniform(-10., 1., 'log_f', r'$\log f_\mathrm{sys}$'),
@@ -146,7 +146,7 @@ labels=[prior_dist.latex_label for key, prior_dist in priors.items()]
 )
 ```
 
-<img width='1578' height='1600' alt='Image' src='https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14' />
+<img width='1578' height='1600' alt='Image' src='https://github.com/user-attachments/assets/ed77ce4b-7ed3-4d2c-9b49-35d36ee72ccb' />
 
 ```python
 print(label)
@@ -168,15 +168,15 @@ for col in quantile_tab.columns[:-2]:
 输出结果
 ```bash
 # 10keV-2broken
-# log Z = 12270.855083203984 ± 0.09596729206594165
+# log Z = 12270.607387903234 ± 0.09746941609724716
 
-# c = -3.511708 (+0.095322/-0.053394)
-# breakpoint1 = 282.401849 (+9.890989/-9.029383)
-# breakpoint2 = 1364.632182 (+445.765043/-317.448853)
-# alpha1 = 0.033560 (+0.042786/-0.024177)
-# alpha2 = 1.281681 (+0.028755/-0.032431)
-# alpha3 = 1.551975 (+0.027622/-0.023177)
-# log_f = -1.431941 (+0.029968/-0.028908)
+# c = -3.661216 (+0.147197/-0.145641)
+# breakpoint1 = 272.599363 (+12.038642/-11.232960)
+# breakpoint2 = 1325.521828 (+424.605908/-306.887697)
+# alpha1 = -0.033724 (+0.066284/-0.066135)
+# alpha2 = 1.273952 (+0.029515/-0.033641)
+# alpha3 = 1.550395 (+0.028099/-0.022251)
+# log_f = -1.433169 (+0.029608/-0.029620)
 
 # 10keV-1broken
 # log Z = 12250.889339996882 ± 0.08563383228929447
@@ -188,7 +188,7 @@ for col in quantile_tab.columns[:-2]:
 # log_f = -1.400355 (+0.028854/-0.029786)
 ```
 计算对数贝叶斯因子（ln Bayes Factor）
-$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} \approx 20$
 
 根据 Jeffreys scale 判断
 | ln(Bayes Factor)      | 强度解释（Jeffreys scale)          |
@@ -302,7 +302,7 @@ priors = dict(
     c = bilby.core.prior.Uniform(-4, -3, 'k',r'$c$'),
     breakpoint1 = bilby.core.prior.Uniform(200, 500, 'breakpoint1',r'$breakpoint1$'),
     breakpoint2 = bilby.core.prior.Uniform(500,10000, 'breakpoint2',r'$breakpoint2$'),
-    alpha1 = bilby.core.prior.Uniform(0, 0.5, 'alpha1',r'$alpha1$'),
+    alpha1 = bilby.core.prior.Uniform(-1, 1, 'alpha1',r'$alpha1$'),
     alpha2 = bilby.core.prior.Uniform(1, 2, 'alpha2', r'$alpha2$'),
     alpha3 = bilby.core.prior.Uniform(1, 2, 'alpha3', r'$alpha3$'),
     log_f = bilby.core.prior.Uniform(-10., 1., 'log_f', r'$\log f_\mathrm{sys}$'),
@@ -336,7 +336,7 @@ labels=[prior_dist.latex_label for key, prior_dist in priors.items()]
 )
 ```
 
-<img width='1578' height='1600' alt='Image' src='https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14' />
+<img width='1578' height='1600' alt='Image' src='https://github.com/user-attachments/assets/ed77ce4b-7ed3-4d2c-9b49-35d36ee72ccb' />
 
 ```python
 print(label)
@@ -358,15 +358,15 @@ for col in quantile_tab.columns[:-2]:
 输出结果
 ```bash
 # 10keV-2broken
-# log Z = 12270.855083203984 ± 0.09596729206594165
+# log Z = 12270.607387903234 ± 0.09746941609724716
 
-# c = -3.511708 (+0.095322/-0.053394)
-# breakpoint1 = 282.401849 (+9.890989/-9.029383)
-# breakpoint2 = 1364.632182 (+445.765043/-317.448853)
-# alpha1 = 0.033560 (+0.042786/-0.024177)
-# alpha2 = 1.281681 (+0.028755/-0.032431)
-# alpha3 = 1.551975 (+0.027622/-0.023177)
-# log_f = -1.431941 (+0.029968/-0.028908)
+# c = -3.661216 (+0.147197/-0.145641)
+# breakpoint1 = 272.599363 (+12.038642/-11.232960)
+# breakpoint2 = 1325.521828 (+424.605908/-306.887697)
+# alpha1 = -0.033724 (+0.066284/-0.066135)
+# alpha2 = 1.273952 (+0.029515/-0.033641)
+# alpha3 = 1.550395 (+0.028099/-0.022251)
+# log_f = -1.433169 (+0.029608/-0.029620)
 
 # 10keV-1broken
 # log Z = 12250.889339996882 ± 0.08563383228929447
@@ -378,7 +378,7 @@ for col in quantile_tab.columns[:-2]:
 # log_f = -1.400355 (+0.028854/-0.029786)
 ```
 计算对数贝叶斯因子（ln Bayes Factor）
-$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} \approx 20$
 
 根据 Jeffreys scale 判断
 | ln(Bayes Factor)      | 强度解释（Jeffreys scale)          |
@@ -550,7 +550,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">-</span><span class="pl-c1">4</span>, <span class="pl-c1">-</span><span class="pl-c1">3</span>, <span class="pl-s">"k"</span>,<span class="pl-s">r"$c$"</span>),
     <span class="pl-s1">breakpoint1</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">200</span>, <span class="pl-c1">500</span>, <span class="pl-s">"breakpoint1"</span>,<span class="pl-s">r"$breakpoint1$"</span>),
     <span class="pl-s1">breakpoint2</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">500</span>,<span class="pl-c1">10000</span>, <span class="pl-s">"breakpoint2"</span>,<span class="pl-s">r"$breakpoint2$"</span>),
-    <span class="pl-s1">alpha1</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0.5</span>, <span class="pl-s">"alpha1"</span>,<span class="pl-s">r"$alpha1$"</span>),
+    <span class="pl-s1">alpha1</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">-</span><span class="pl-c1">1</span>, <span class="pl-c1">1</span>, <span class="pl-s">"alpha1"</span>,<span class="pl-s">r"$alpha1$"</span>),
     <span class="pl-s1">alpha2</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-s">"alpha2"</span>, <span class="pl-s">r"$alpha2$"</span>),
     <span class="pl-s1">alpha3</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-s">"alpha3"</span>, <span class="pl-s">r"$alpha3$"</span>),
     <span class="pl-s1">log_f</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">-</span><span class="pl-c1">10.</span>, <span class="pl-c1">1.</span>, <span class="pl-s">"log_f"</span>, <span class="pl-s">r"$\log f_\mathrm{sys}$"</span>),
@@ -576,7 +576,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-s1">show_titles</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">quantiles</span><span class="pl-c1">=</span>[<span class="pl-c1">0.16</span>, <span class="pl-c1">0.5</span>, <span class="pl-c1">0.84</span>], 
 <span class="pl-s1">labels</span><span class="pl-c1">=</span>[<span class="pl-s1">prior_dist</span>.<span class="pl-c1">latex_label</span> <span class="pl-k">for</span> <span class="pl-s1">key</span>, <span class="pl-s1">prior_dist</span> <span class="pl-c1">in</span> <span class="pl-s1">priors</span>.<span class="pl-c1">items</span>()]
 )</pre></div>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14"><img width="1578" height="1600" alt="Image" src="https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14" style="max-width: 100%; height: auto; max-height: 1600px;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/ed77ce4b-7ed3-4d2c-9b49-35d36ee72ccb"><img width="1578" height="1600" alt="Image" src="https://github.com/user-attachments/assets/ed77ce4b-7ed3-4d2c-9b49-35d36ee72ccb" style="max-width: 100%; height: auto; max-height: 1600px;"></a></p>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">print</span>(<span class="pl-s1">label</span>)
 <span class="pl-en">print</span>(<span class="pl-s">f'log Z = <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result</span>.<span class="pl-c1">log_evidence</span><span class="pl-kos">}</span></span> ± <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result</span>.<span class="pl-c1">log_evidence_err</span><span class="pl-kos">}</span></span><span class="pl-cce">\n</span>'</span>)
 
@@ -593,15 +593,15 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">col</span><span class="pl-kos">}</span></span> = <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">q50</span>:.6f<span class="pl-kos">}</span></span> (+<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">err_high</span>:.6f<span class="pl-kos">}</span></span>/-<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">err_low</span>:.6f<span class="pl-kos">}</span></span>)"</span>)</pre></div>
 <p>输出结果</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 10keV-2broken</span>
-<span class="pl-c"><span class="pl-c">#</span> log Z = 12270.855083203984 ± 0.09596729206594165</span>
+<span class="pl-c"><span class="pl-c">#</span> log Z = 12270.607387903234 ± 0.09746941609724716</span>
 
-<span class="pl-c"><span class="pl-c">#</span> c = -3.511708 (+0.095322/-0.053394)</span>
-<span class="pl-c"><span class="pl-c">#</span> breakpoint1 = 282.401849 (+9.890989/-9.029383)</span>
-<span class="pl-c"><span class="pl-c">#</span> breakpoint2 = 1364.632182 (+445.765043/-317.448853)</span>
-<span class="pl-c"><span class="pl-c">#</span> alpha1 = 0.033560 (+0.042786/-0.024177)</span>
-<span class="pl-c"><span class="pl-c">#</span> alpha2 = 1.281681 (+0.028755/-0.032431)</span>
-<span class="pl-c"><span class="pl-c">#</span> alpha3 = 1.551975 (+0.027622/-0.023177)</span>
-<span class="pl-c"><span class="pl-c">#</span> log_f = -1.431941 (+0.029968/-0.028908)</span>
+<span class="pl-c"><span class="pl-c">#</span> c = -3.661216 (+0.147197/-0.145641)</span>
+<span class="pl-c"><span class="pl-c">#</span> breakpoint1 = 272.599363 (+12.038642/-11.232960)</span>
+<span class="pl-c"><span class="pl-c">#</span> breakpoint2 = 1325.521828 (+424.605908/-306.887697)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha1 = -0.033724 (+0.066284/-0.066135)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha2 = 1.273952 (+0.029515/-0.033641)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha3 = 1.550395 (+0.028099/-0.022251)</span>
+<span class="pl-c"><span class="pl-c">#</span> log_f = -1.433169 (+0.029608/-0.029620)</span>
 
 <span class="pl-c"><span class="pl-c">#</span> 10keV-1broken</span>
 <span class="pl-c"><span class="pl-c">#</span> log Z = 12250.889339996882 ± 0.08563383228929447</span>
@@ -612,7 +612,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-c"><span class="pl-c">#</span> alpha2 = 1.471793 (+0.011757/-0.011525)</span>
 <span class="pl-c"><span class="pl-c">#</span> log_f = -1.400355 (+0.028854/-0.029786)</span></pre></div>
 <p>计算对数贝叶斯因子（ln Bayes Factor）<br>
-$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$</p>
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} \approx 20$</p>
 <p>根据 Jeffreys scale 判断</p>
 <markdown-accessiblity-table><table role="table">
 <thead>
@@ -665,7 +665,7 @@ $\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 =
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">set_xlabel</span>(<span class="pl-s">'Time since trigger [s]'</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">set_ylabel</span>(<span class="pl-s">'Flux density [Jy]'</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">legend</span>(<span class="pl-s1">frameon</span><span class="pl-c1">=</span><span class="pl-c1">True</span>,<span class="pl-s1">framealpha</span><span class="pl-c1">=</span><span class="pl-c1">0.5</span>)</pre></div>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f"><img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f" style="max-width: 100%; height: auto; max-height: 438px;"></a></p></div>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/434879b7-7d8d-496f-a2c6-9421995a18a7"><img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/434879b7-7d8d-496f-a2c6-9421995a18a7" style="max-width: 100%; height: auto; max-height: 438px;"></a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
