@@ -165,15 +165,8 @@ for col in quantile_tab.columns[:-2]:
     print(f'{col} = {q50:.6f} (+{err_high:.6f}/-{err_low:.6f})')
 ```
 
-```python
-import matplotlib.pyplot as plt
-fig, ax = plt.subplot_mosaic([['lc']])
-
-ax['lc'].errorbar(x_time, x_flux, 
-    #xerr = x_time_err, 
-    yerr = x_flux_err, 
-    fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
-
+输出结果
+```bash
 # 10keV-2broken
 # log Z = 12270.855083203984 ± 0.09596729206594165
 
@@ -193,26 +186,19 @@ ax['lc'].errorbar(x_time, x_flux,
 # alpha1 = 0.107049 (+0.057266/-0.054615)
 # alpha2 = 1.471793 (+0.011757/-0.011525)
 # log_f = -1.400355 (+0.028854/-0.029786)
-
-x = np.logspace(1.5, 6, 1000)
-c = -3.511708
-deltas = [0.1,0.1]                                                # 2个平滑参数
-breakpoints = [282.401849, 1364.632182]    # 2个拐点
-alphas = [0.033560, 1.281681, 1.551975]       # 3个幂律指数
-y = multi_sbpl(x, c, breakpoints, alphas, deltas)
-ax['lc'].plot(x,y)
-
-for bp in breakpoints:
-    ax['lc'].axvline(bp, color='r', linestyle='--', alpha=0.5)
-
-ax['lc'].set_xscale('log')
-ax['lc'].set_yscale('log')
-ax['lc'].set_xlabel('Time since trigger [s]')
-ax['lc'].set_ylabel('Flux density [Jy]')
-ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
+计算对数贝叶斯因子（ln Bayes Factor）
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
 
-<img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f' />。">
+根据 Jeffreys scale 判断
+| ln(Bayes Factor)      | 强度解释（Jeffreys scale）.       |
+| :------------------: | :-----------------------------: |
+| 0–1                            | 不可区分 (Inconclusive)              |
+| 1–2.5                         | 弱证据(Weak evidence)              |
+| 2.5–5                        | 中等证据   (Moderate evidence) |
+| >5                             | 强有力支持(Strong evidence)      |
+
+**Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。">
 <meta property="og:title" content="bilby">
 <meta property="og:description" content="bilby + PyMultiNest + MultiNest
 
@@ -369,15 +355,8 @@ for col in quantile_tab.columns[:-2]:
     print(f'{col} = {q50:.6f} (+{err_high:.6f}/-{err_low:.6f})')
 ```
 
-```python
-import matplotlib.pyplot as plt
-fig, ax = plt.subplot_mosaic([['lc']])
-
-ax['lc'].errorbar(x_time, x_flux, 
-    #xerr = x_time_err, 
-    yerr = x_flux_err, 
-    fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
-
+输出结果
+```bash
 # 10keV-2broken
 # log Z = 12270.855083203984 ± 0.09596729206594165
 
@@ -397,26 +376,19 @@ ax['lc'].errorbar(x_time, x_flux,
 # alpha1 = 0.107049 (+0.057266/-0.054615)
 # alpha2 = 1.471793 (+0.011757/-0.011525)
 # log_f = -1.400355 (+0.028854/-0.029786)
-
-x = np.logspace(1.5, 6, 1000)
-c = -3.511708
-deltas = [0.1,0.1]                                                # 2个平滑参数
-breakpoints = [282.401849, 1364.632182]    # 2个拐点
-alphas = [0.033560, 1.281681, 1.551975]       # 3个幂律指数
-y = multi_sbpl(x, c, breakpoints, alphas, deltas)
-ax['lc'].plot(x,y)
-
-for bp in breakpoints:
-    ax['lc'].axvline(bp, color='r', linestyle='--', alpha=0.5)
-
-ax['lc'].set_xscale('log')
-ax['lc'].set_yscale('log')
-ax['lc'].set_xlabel('Time since trigger [s]')
-ax['lc'].set_ylabel('Flux density [Jy]')
-ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
+计算对数贝叶斯因子（ln Bayes Factor）
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
 
-<img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f' />。">
+根据 Jeffreys scale 判断
+| ln(Bayes Factor)      | 强度解释（Jeffreys scale）.       |
+| :------------------: | :-----------------------------: |
+| 0–1                            | 不可区分 (Inconclusive)              |
+| 1–2.5                         | 弱证据(Weak evidence)              |
+| 2.5–5                        | 中等证据   (Moderate evidence) |
+| >5                             | 强有力支持(Strong evidence)      |
+
+**Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://astro-lee.github.io/post/bilby.html">
 <meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
@@ -619,6 +591,56 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-s1">err_high</span> <span class="pl-c1">=</span> <span class="pl-s1">q84</span> <span class="pl-c1">-</span> <span class="pl-s1">q50</span>
 
     <span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">col</span><span class="pl-kos">}</span></span> = <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">q50</span>:.6f<span class="pl-kos">}</span></span> (+<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">err_high</span>:.6f<span class="pl-kos">}</span></span>/-<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">err_low</span>:.6f<span class="pl-kos">}</span></span>)"</span>)</pre></div>
+<p>输出结果</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 10keV-2broken</span>
+<span class="pl-c"><span class="pl-c">#</span> log Z = 12270.855083203984 ± 0.09596729206594165</span>
+
+<span class="pl-c"><span class="pl-c">#</span> c = -3.511708 (+0.095322/-0.053394)</span>
+<span class="pl-c"><span class="pl-c">#</span> breakpoint1 = 282.401849 (+9.890989/-9.029383)</span>
+<span class="pl-c"><span class="pl-c">#</span> breakpoint2 = 1364.632182 (+445.765043/-317.448853)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha1 = 0.033560 (+0.042786/-0.024177)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha2 = 1.281681 (+0.028755/-0.032431)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha3 = 1.551975 (+0.027622/-0.023177)</span>
+<span class="pl-c"><span class="pl-c">#</span> log_f = -1.431941 (+0.029968/-0.028908)</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 10keV-1broken</span>
+<span class="pl-c"><span class="pl-c">#</span> log Z = 12250.889339996882 ± 0.08563383228929447</span>
+
+<span class="pl-c"><span class="pl-c">#</span> c = -3.359253 (+0.130664/-0.124555)</span>
+<span class="pl-c"><span class="pl-c">#</span> breakpoint1 = 333.251729 (+11.848272/-10.852528)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha1 = 0.107049 (+0.057266/-0.054615)</span>
+<span class="pl-c"><span class="pl-c">#</span> alpha2 = 1.471793 (+0.011757/-0.011525)</span>
+<span class="pl-c"><span class="pl-c">#</span> log_f = -1.400355 (+0.028854/-0.029786)</span></pre></div>
+<p>计算对数贝叶斯因子（ln Bayes Factor）<br>
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$</p>
+<p>根据 Jeffreys scale 判断</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th align="center">ln(Bayes Factor)</th>
+<th align="center">强度解释（Jeffreys scale）.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0–1</td>
+<td align="center">不可区分 (Inconclusive)</td>
+</tr>
+<tr>
+<td align="center">1–2.5</td>
+<td align="center">弱证据(Weak evidence)</td>
+</tr>
+<tr>
+<td align="center">2.5–5</td>
+<td align="center">中等证据   (Moderate evidence)</td>
+</tr>
+<tr>
+<td align="center">&gt;5</td>
+<td align="center">强有力支持(Strong evidence)</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p><strong>Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。</strong></p>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-k">import</span> <span class="pl-s1">matplotlib</span>.<span class="pl-s1">pyplot</span> <span class="pl-k">as</span> <span class="pl-s1">plt</span>
 <span class="pl-s1">fig</span>, <span class="pl-s1">ax</span> <span class="pl-c1">=</span> <span class="pl-s1">plt</span>.<span class="pl-c1">subplot_mosaic</span>([[<span class="pl-s">'lc'</span>]])
 
@@ -626,26 +648,6 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-c">#xerr = x_time_err, </span>
     <span class="pl-s1">yerr</span> <span class="pl-c1">=</span> <span class="pl-s1">x_flux_err</span>, 
     <span class="pl-s1">fmt</span><span class="pl-c1">=</span><span class="pl-s">'+'</span>, <span class="pl-s1">color</span><span class="pl-c1">=</span><span class="pl-s">'k'</span>, <span class="pl-s1">ms</span><span class="pl-c1">=</span><span class="pl-c1">2</span>, <span class="pl-s1">capsize</span><span class="pl-c1">=</span><span class="pl-c1">0</span>, <span class="pl-s1">label</span><span class="pl-c1">=</span><span class="pl-s">'flux density @ 10 keV'</span>,<span class="pl-s1">alpha</span><span class="pl-c1">=</span><span class="pl-c1">0.2</span>)
-
-<span class="pl-c"># 10keV-2broken</span>
-<span class="pl-c"># log Z = 12270.855083203984 ± 0.09596729206594165</span>
-
-<span class="pl-c"># c = -3.511708 (+0.095322/-0.053394)</span>
-<span class="pl-c"># breakpoint1 = 282.401849 (+9.890989/-9.029383)</span>
-<span class="pl-c"># breakpoint2 = 1364.632182 (+445.765043/-317.448853)</span>
-<span class="pl-c"># alpha1 = 0.033560 (+0.042786/-0.024177)</span>
-<span class="pl-c"># alpha2 = 1.281681 (+0.028755/-0.032431)</span>
-<span class="pl-c"># alpha3 = 1.551975 (+0.027622/-0.023177)</span>
-<span class="pl-c"># log_f = -1.431941 (+0.029968/-0.028908)</span>
-
-<span class="pl-c"># 10keV-1broken</span>
-<span class="pl-c"># log Z = 12250.889339996882 ± 0.08563383228929447</span>
-
-<span class="pl-c"># c = -3.359253 (+0.130664/-0.124555)</span>
-<span class="pl-c"># breakpoint1 = 333.251729 (+11.848272/-10.852528)</span>
-<span class="pl-c"># alpha1 = 0.107049 (+0.057266/-0.054615)</span>
-<span class="pl-c"># alpha2 = 1.471793 (+0.011757/-0.011525)</span>
-<span class="pl-c"># log_f = -1.400355 (+0.028854/-0.029786)</span>
 
 <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">logspace</span>(<span class="pl-c1">1.5</span>, <span class="pl-c1">6</span>, <span class="pl-c1">1000</span>)
 <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3.511708</span>
@@ -827,6 +829,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-
+<script>MathJax = {tex: {inlineMath: [["$", "$"]]}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 </html>

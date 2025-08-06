@@ -153,15 +153,8 @@ for col in quantile_tab.columns[:-2]:
     print(f"{col} = {q50:.6f} (+{err_high:.6f}/-{err_low:.6f})")
 ```
 
-```python
-import matplotlib.pyplot as plt
-fig, ax = plt.subplot_mosaic([['lc']])
-
-ax['lc'].errorbar(x_time, x_flux, 
-    #xerr = x_time_err, 
-    yerr = x_flux_err, 
-    fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
-
+输出结果
+```bash
 # 10keV-2broken
 # log Z = 12270.855083203984 ± 0.09596729206594165
 
@@ -181,6 +174,28 @@ ax['lc'].errorbar(x_time, x_flux,
 # alpha1 = 0.107049 (+0.057266/-0.054615)
 # alpha2 = 1.471793 (+0.011757/-0.011525)
 # log_f = -1.400355 (+0.028854/-0.029786)
+```
+计算对数贝叶斯因子（ln Bayes Factor）
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
+
+根据 Jeffreys scale 判断
+| ln(Bayes Factor)      | 强度解释（Jeffreys scale）.       |
+| :------------------: | :-----------------------------: |
+| 0–1                            | 不可区分 (Inconclusive)              |
+| 1–2.5                         | 弱证据(Weak evidence)              |
+| 2.5–5                        | 中等证据   (Moderate evidence) |
+| >5                             | 强有力支持(Strong evidence)      |
+
+**Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。**
+
+```python
+import matplotlib.pyplot as plt
+fig, ax = plt.subplot_mosaic([['lc']])
+
+ax['lc'].errorbar(x_time, x_flux, 
+    #xerr = x_time_err, 
+    yerr = x_flux_err, 
+    fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
 
 x = np.logspace(1.5, 6, 1000)
 c = -3.511708

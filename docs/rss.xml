@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 11:24:15 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 11:54:35 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
 
 ```python
 import pandas as pd
@@ -154,15 +154,8 @@ for col in quantile_tab.columns[:-2]:
     print(f'{col} = {q50:.6f} (+{err_high:.6f}/-{err_low:.6f})')
 ```
 
-```python
-import matplotlib.pyplot as plt
-fig, ax = plt.subplot_mosaic([['lc']])
-
-ax['lc'].errorbar(x_time, x_flux, 
-    #xerr = x_time_err, 
-    yerr = x_flux_err, 
-    fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
-
+输出结果
+```bash
 # 10keV-2broken
 # log Z = 12270.855083203984 ± 0.09596729206594165
 
@@ -182,26 +175,19 @@ ax['lc'].errorbar(x_time, x_flux,
 # alpha1 = 0.107049 (+0.057266/-0.054615)
 # alpha2 = 1.471793 (+0.011757/-0.011525)
 # log_f = -1.400355 (+0.028854/-0.029786)
-
-x = np.logspace(1.5, 6, 1000)
-c = -3.511708
-deltas = [0.1,0.1]                                                # 2个平滑参数
-breakpoints = [282.401849, 1364.632182]    # 2个拐点
-alphas = [0.033560, 1.281681, 1.551975]       # 3个幂律指数
-y = multi_sbpl(x, c, breakpoints, alphas, deltas)
-ax['lc'].plot(x,y)
-
-for bp in breakpoints:
-    ax['lc'].axvline(bp, color='r', linestyle='--', alpha=0.5)
-
-ax['lc'].set_xscale('log')
-ax['lc'].set_yscale('log')
-ax['lc'].set_xlabel('Time since trigger [s]')
-ax['lc'].set_ylabel('Flux density [Jy]')
-ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
+计算对数贝叶斯因子（ln Bayes Factor）
+$\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
 
-&lt;img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f' /&gt;。</description><guid isPermaLink="true">https://astro-lee.github.io/post/bilby.html</guid><pubDate>Wed, 06 Aug 2025 08:52:59 +0000</pubDate></item><item><title>Multi-SBPL Function</title><link>https://astro-lee.github.io/post/Multi-SBPL%20Function.html</link><description>$f(x) = 10^{c}\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
+根据 Jeffreys scale 判断
+| ln(Bayes Factor)      | 强度解释（Jeffreys scale）.       |
+| :------------------: | :-----------------------------: |
+| 0–1                            | 不可区分 (Inconclusive)              |
+| 1–2.5                         | 弱证据(Weak evidence)              |
+| 2.5–5                        | 中等证据   (Moderate evidence) |
+| &gt;5                             | 强有力支持(Strong evidence)      |
+
+**Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。</description><guid isPermaLink="true">https://astro-lee.github.io/post/bilby.html</guid><pubDate>Wed, 06 Aug 2025 08:52:59 +0000</pubDate></item><item><title>Multi-SBPL Function</title><link>https://astro-lee.github.io/post/Multi-SBPL%20Function.html</link><description>$f(x) = 10^{c}\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
 
 其中：
 - $c$: 归一化幂指数。</description><guid isPermaLink="true">https://astro-lee.github.io/post/Multi-SBPL%20Function.html</guid><pubDate>Mon, 04 Aug 2025 09:05:13 +0000</pubDate></item><item><title>statistically consistent</title><link>https://astro-lee.github.io/post/statistically%20consistent.html</link><description>要验证两个变量 $\alpha_\mathrm{obs,X} = 1.286 \pm 0.030$ 和 $\alpha_\mathrm{obs,O} = 1.340 \pm 0.002$ 是否一致，我们需要检查它们的测量值在考虑到不确定度的情况下是否兼容。</description><guid isPermaLink="true">https://astro-lee.github.io/post/statistically%20consistent.html</guid><pubDate>Tue, 29 Jul 2025 02:40:51 +0000</pubDate></item><item><title>gfortran</title><link>https://astro-lee.github.io/post/gfortran.html</link><description>```
