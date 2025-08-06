@@ -198,10 +198,10 @@ ax['lc'].errorbar(x_time, x_flux,
     fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
 
 x = np.logspace(1.5, 6, 1000)
-c = -3.511708
-deltas = [0.1,0.1]                                                # 2个平滑参数
-breakpoints = [282.401849, 1364.632182]    # 2个拐点
-alphas = [0.033560, 1.281681, 1.551975]       # 3个幂律指数
+c = -3.661216
+deltas = [0.1,0.1]                        # 2个平滑参数
+breakpoints = [272.599363, 1325.521828]   # 2个拐点
+alphas = [-0.033724, 1.273952, 1.550395]   # 3个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
 ax['lc'].plot(x,y)
 
