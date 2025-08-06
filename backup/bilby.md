@@ -179,12 +179,12 @@ for col in quantile_tab.columns[:-2]:
 $\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
 
 根据 Jeffreys scale 判断
-| ln(Bayes Factor)      | 强度解释（Jeffreys scale）.       |
+| ln(Bayes Factor)      | 强度解释（Jeffreys scale)          |
 | :------------------: | :-----------------------------: |
 | 0–1                            | 不可区分 (Inconclusive)              |
-| 1–2.5                         | 弱证据(Weak evidence)              |
-| 2.5–5                        | 中等证据   (Moderate evidence) |
-| >5                             | 强有力支持(Strong evidence)      |
+| 1–2.5                         | 弱证据 (Weak evidence)             |
+| 2.5–5                        | 中等证据 (Moderate evidence)   |
+| >5                             | 强有力支持 (Strong evidence)     |
 
 **Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。**
 

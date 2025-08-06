@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 11:54:35 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 11:55:33 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
 
 ```python
 import pandas as pd
@@ -180,12 +180,12 @@ for col in quantile_tab.columns[:-2]:
 $\ln B = \log Z_{\text{2break}} - \log Z_{\text{1break}} = 12270.86 - 12250.89 = 19.97$
 
 根据 Jeffreys scale 判断
-| ln(Bayes Factor)      | 强度解释（Jeffreys scale）.       |
+| ln(Bayes Factor)      | 强度解释（Jeffreys scale)          |
 | :------------------: | :-----------------------------: |
 | 0–1                            | 不可区分 (Inconclusive)              |
-| 1–2.5                         | 弱证据(Weak evidence)              |
-| 2.5–5                        | 中等证据   (Moderate evidence) |
-| &gt;5                             | 强有力支持(Strong evidence)      |
+| 1–2.5                         | 弱证据 (Weak evidence)             |
+| 2.5–5                        | 中等证据 (Moderate evidence)   |
+| &gt;5                             | 强有力支持 (Strong evidence)     |
 
 **Bayes 因子 $\ln B \approx 20$ 表明强有力的统计证据支持使用 2 个断点的模型。</description><guid isPermaLink="true">https://astro-lee.github.io/post/bilby.html</guid><pubDate>Wed, 06 Aug 2025 08:52:59 +0000</pubDate></item><item><title>Multi-SBPL Function</title><link>https://astro-lee.github.io/post/Multi-SBPL%20Function.html</link><description>$f(x) = 10^{c}\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
 
