@@ -1,7 +1,7 @@
-$f(x) = A\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
+$f(x) = 10^{c}\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_{bi}}\right)^{1/\delta_i}\right]^{-\delta_i(\alpha_{i+1}-\alpha_i)}$
 
 其中：
-- $A$: 归一化常数。
+- $c$: 归一化幂指数。
 - $x_{bi}$: 第 $i$ 个拐点，满足 $x_{b1}$ < $x_{b2}$ < $\dots$ < $x_{b(n-1)}$。
 - $\alpha_i$: 正数，表示第 $i$ 个区间的幂律指数的绝对值（实际指数为 $-\alpha_i$).
 - $\delta_i$: 平滑参数，控制第 $i$ 个拐点的过渡宽度（$\delta_i$ 越小，过渡越平滑；$\delta_i \to \infty$，退化为传统破幂律的尖锐拐点，一般设为固定值）。
@@ -16,7 +16,7 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
     参数:
         x: 自变量 (array-like)
-        c: 归一化常数
+        c: 归一化幂指数
         breakpoints: 拐点列表 [xb1, xb2, ..., xb(n-1)]
         alphas: 正的幂律指数绝对值列表 [alpha1, alpha2, ..., alphan]
         deltas: 平滑参数列表 [delta1, delta2, ..., delta(n-1)]
@@ -46,4 +46,4 @@ plt.xscale('log')
 plt.yscale('log')
 ```
 
-<img width="649" height="614" alt="Image" src="https://github.com/user-attachments/assets/3797235b-86c4-4556-868e-3af40e2ea4e2" />
+<img width="650" height="614" alt="Image" src="https://github.com/user-attachments/assets/b4bc3a5a-a5c3-4ce8-af8e-5b4ed5d43464" />
