@@ -40,6 +40,7 @@ multinest_lib_path = os.path.expanduser("~/Downloads/MultiNest/lib")
 os.environ["DYLD_LIBRARY_PATH"] = multinest_lib_path + ":" + os.environ.get("DYLD_LIBRARY_PATH", "")
 # （如果需要的话）显示设置是否成功
 print("DYLD_LIBRARY_PATH =", os.environ["DYLD_LIBRARY_PATH"])
+# 或者cp -v ~/Downloads/MultiNest/lib/lib* /anaconda3/lib/
 ```
 
 ```python

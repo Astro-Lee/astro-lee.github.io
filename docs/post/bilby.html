@@ -52,6 +52,7 @@ multinest_lib_path = os.path.expanduser('~/Downloads/MultiNest/lib')
 os.environ['DYLD_LIBRARY_PATH'] = multinest_lib_path + ':' + os.environ.get('DYLD_LIBRARY_PATH', '')
 # （如果需要的话）显示设置是否成功
 print('DYLD_LIBRARY_PATH =', os.environ['DYLD_LIBRARY_PATH'])
+# 或者cp -v ~/Downloads/MultiNest/lib/lib* /anaconda3/lib/
 ```
 
 ```python
@@ -255,6 +256,7 @@ multinest_lib_path = os.path.expanduser('~/Downloads/MultiNest/lib')
 os.environ['DYLD_LIBRARY_PATH'] = multinest_lib_path + ':' + os.environ.get('DYLD_LIBRARY_PATH', '')
 # （如果需要的话）显示设置是否成功
 print('DYLD_LIBRARY_PATH =', os.environ['DYLD_LIBRARY_PATH'])
+# 或者cp -v ~/Downloads/MultiNest/lib/lib* /anaconda3/lib/
 ```
 
 ```python
@@ -518,7 +520,8 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-s1">multinest_lib_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-c1">expanduser</span>(<span class="pl-s">"~/Downloads/MultiNest/lib"</span>)
 <span class="pl-s1">os</span>.<span class="pl-c1">environ</span>[<span class="pl-s">"DYLD_LIBRARY_PATH"</span>] <span class="pl-c1">=</span> <span class="pl-s1">multinest_lib_path</span> <span class="pl-c1">+</span> <span class="pl-s">":"</span> <span class="pl-c1">+</span> <span class="pl-s1">os</span>.<span class="pl-c1">environ</span>.<span class="pl-c1">get</span>(<span class="pl-s">"DYLD_LIBRARY_PATH"</span>, <span class="pl-s">""</span>)
 <span class="pl-c"># （如果需要的话）显示设置是否成功</span>
-<span class="pl-en">print</span>(<span class="pl-s">"DYLD_LIBRARY_PATH ="</span>, <span class="pl-s1">os</span>.<span class="pl-c1">environ</span>[<span class="pl-s">"DYLD_LIBRARY_PATH"</span>])</pre></div>
+<span class="pl-en">print</span>(<span class="pl-s">"DYLD_LIBRARY_PATH ="</span>, <span class="pl-s1">os</span>.<span class="pl-c1">environ</span>[<span class="pl-s">"DYLD_LIBRARY_PATH"</span>])
+<span class="pl-c"># 或者cp -v ~/Downloads/MultiNest/lib/lib* /anaconda3/lib/</span></pre></div>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c">#!/usr/bin/env python</span>
 <span class="pl-s">"""</span>
 <span class="pl-s">An example of how to use bilby to perform parameter estimation for</span>
