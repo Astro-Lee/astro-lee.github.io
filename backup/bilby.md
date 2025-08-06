@@ -78,11 +78,13 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
     def log_likelihood(self):
         c = self.parameters["c"]  
         breakpoint1 = self.parameters["breakpoint1"]
+        breakpoint2 = self.parameters["breakpoint2"]
         alpha1 = self.parameters["alpha1"]
         alpha2 = self.parameters["alpha2"]
-        log_f = self.parameters["log_f"]      
+        alpha3 = self.parameters["alpha3"]
+        log_f = self.parameters["log_f"]     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1], alphas=[alpha1,alpha2], deltas=[0.1])
+        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)
@@ -96,15 +98,17 @@ likelihood = SimpleGaussianLikelihood(x_time, x_flux, x_flux_err)
 priors = dict(
     c = bilby.core.prior.Uniform(-4, -3, "k",r"$c$"),
     breakpoint1 = bilby.core.prior.Uniform(200, 500, "breakpoint1",r"$breakpoint1$"),
+    breakpoint2 = bilby.core.prior.Uniform(500,10000, "breakpoint2",r"$breakpoint2$"),
     alpha1 = bilby.core.prior.Uniform(0, 0.5, "alpha1",r"$alpha1$"),
     alpha2 = bilby.core.prior.Uniform(1, 2, "alpha2", r"$alpha2$"),
+    alpha3 = bilby.core.prior.Uniform(1, 2, "alpha3", r"$alpha3$"),
     log_f = bilby.core.prior.Uniform(-10., 1., "log_f", r"$\log f_\mathrm{sys}$"),
 )
 ```
 
 ```python
 # A few simple setup steps
-label = "10keV"
+label = "10keV-2broken"
 outdir = "outdir"
 
 # And run sampler
@@ -118,7 +122,7 @@ result = bilby.run_sampler(
     verbose=False,
     nlive=2000,
     resume=True,
-    clean= True,
+    clean=True,
 )
 ```
 
@@ -129,12 +133,15 @@ labels=[prior_dist.latex_label for key, prior_dist in priors.items()]
 )
 ```
 
-<img width="1158" height="1180" alt="Image" src="https://github.com/user-attachments/assets/8a7d8e00-17d1-4ec8-8997-0942772f5ce7" />
+<img width="1578" height="1600" alt="Image" src="https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14" />
 
 ```python
+print(label)
+print(f'log Z = {result.log_evidence} ± {result.log_evidence_err}\n')
+
 quantile_tab = result.posterior.quantile([0.16, 0.5, 0.84])
 # 遍历所有列，打印中位数和上下误差
-for col in quantile_tab.columns:
+for col in quantile_tab.columns[:-2]:
     q16 = quantile_tab.loc[0.16, col]
     q50 = quantile_tab.loc[0.50, col]
     q84 = quantile_tab.loc[0.84, col]
@@ -154,19 +161,27 @@ ax['lc'].errorbar(x_time, x_flux,
     yerr = x_flux_err, 
     fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
 
-# 示例：2段 SBPL
-# c = -3.360415 (+0.128805/-0.123300)
-# breakpoint1 = 333.307345 (+11.413913/-10.706484)
-# alpha1 = 0.106762 (+0.056405/-0.053952)
-# alpha2 = 1.471906 (+0.011692/-0.011421)
+# 10keV-2broken
+# log Z = 12270.855083203984 ± 0.09596729206594165
+
+# c = -3.511708 (+0.095322/-0.053394)
+# breakpoint1 = 282.401849 (+9.890989/-9.029383)
+# breakpoint2 = 1364.632182 (+445.765043/-317.448853)
+# alpha1 = 0.033560 (+0.042786/-0.024177)
+# alpha2 = 1.281681 (+0.028755/-0.032431)
+# alpha3 = 1.551975 (+0.027622/-0.023177)
+# log_f = -1.431941 (+0.029968/-0.028908)
 
 x = np.logspace(1.5, 6, 1000)
-c = -3.360415
-deltas = [0.1]        # 1个平滑参数
-breakpoints = [333.307345]  # 1个拐点
-alphas = [0.106762, 1.471906]     # 2个幂律指数
+c = -3.511708
+deltas = [0.1,0.1]                       # 2个平滑参数
+breakpoints = [282.401849, 1364.632182]   # 2个拐点
+alphas = [0.033560, 1.281681, 1.551975]   # 3个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
 ax['lc'].plot(x,y)
+
+for bp in breakpoints:
+    ax['lc'].axvline(bp, color='r', linestyle='--', alpha=0.5)
 
 ax['lc'].set_xscale('log')
 ax['lc'].set_yscale('log')
@@ -175,4 +190,4 @@ ax['lc'].set_ylabel('Flux density [Jy]')
 ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
 
-<img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/a2106b23-cc8c-4f23-9d49-a4b1a8de10db" />
+<img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f" />

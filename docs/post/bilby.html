@@ -90,11 +90,13 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
     def log_likelihood(self):
         c = self.parameters['c']  
         breakpoint1 = self.parameters['breakpoint1']
+        breakpoint2 = self.parameters['breakpoint2']
         alpha1 = self.parameters['alpha1']
         alpha2 = self.parameters['alpha2']
-        log_f = self.parameters['log_f']      
+        alpha3 = self.parameters['alpha3']
+        log_f = self.parameters['log_f']     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1], alphas=[alpha1,alpha2], deltas=[0.1])
+        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)
@@ -108,15 +110,17 @@ likelihood = SimpleGaussianLikelihood(x_time, x_flux, x_flux_err)
 priors = dict(
     c = bilby.core.prior.Uniform(-4, -3, 'k',r'$c$'),
     breakpoint1 = bilby.core.prior.Uniform(200, 500, 'breakpoint1',r'$breakpoint1$'),
+    breakpoint2 = bilby.core.prior.Uniform(500,10000, 'breakpoint2',r'$breakpoint2$'),
     alpha1 = bilby.core.prior.Uniform(0, 0.5, 'alpha1',r'$alpha1$'),
     alpha2 = bilby.core.prior.Uniform(1, 2, 'alpha2', r'$alpha2$'),
+    alpha3 = bilby.core.prior.Uniform(1, 2, 'alpha3', r'$alpha3$'),
     log_f = bilby.core.prior.Uniform(-10., 1., 'log_f', r'$\log f_\mathrm{sys}$'),
 )
 ```
 
 ```python
 # A few simple setup steps
-label = '10keV'
+label = '10keV-2broken'
 outdir = 'outdir'
 
 # And run sampler
@@ -130,7 +134,7 @@ result = bilby.run_sampler(
     verbose=False,
     nlive=2000,
     resume=True,
-    clean= True,
+    clean=True,
 )
 ```
 
@@ -141,12 +145,15 @@ labels=[prior_dist.latex_label for key, prior_dist in priors.items()]
 )
 ```
 
-<img width='1158' height='1180' alt='Image' src='https://github.com/user-attachments/assets/8a7d8e00-17d1-4ec8-8997-0942772f5ce7' />
+<img width='1578' height='1600' alt='Image' src='https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14' />
 
 ```python
+print(label)
+print(f'log Z = {result.log_evidence} ± {result.log_evidence_err}\n')
+
 quantile_tab = result.posterior.quantile([0.16, 0.5, 0.84])
 # 遍历所有列，打印中位数和上下误差
-for col in quantile_tab.columns:
+for col in quantile_tab.columns[:-2]:
     q16 = quantile_tab.loc[0.16, col]
     q50 = quantile_tab.loc[0.50, col]
     q84 = quantile_tab.loc[0.84, col]
@@ -166,19 +173,27 @@ ax['lc'].errorbar(x_time, x_flux,
     yerr = x_flux_err, 
     fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
 
-# 示例：2段 SBPL
-# c = -3.360415 (+0.128805/-0.123300)
-# breakpoint1 = 333.307345 (+11.413913/-10.706484)
-# alpha1 = 0.106762 (+0.056405/-0.053952)
-# alpha2 = 1.471906 (+0.011692/-0.011421)
+# 10keV-2broken
+# log Z = 12270.855083203984 ± 0.09596729206594165
+
+# c = -3.511708 (+0.095322/-0.053394)
+# breakpoint1 = 282.401849 (+9.890989/-9.029383)
+# breakpoint2 = 1364.632182 (+445.765043/-317.448853)
+# alpha1 = 0.033560 (+0.042786/-0.024177)
+# alpha2 = 1.281681 (+0.028755/-0.032431)
+# alpha3 = 1.551975 (+0.027622/-0.023177)
+# log_f = -1.431941 (+0.029968/-0.028908)
 
 x = np.logspace(1.5, 6, 1000)
-c = -3.360415
-deltas = [0.1]        # 1个平滑参数
-breakpoints = [333.307345]  # 1个拐点
-alphas = [0.106762, 1.471906]     # 2个幂律指数
+c = -3.511708
+deltas = [0.1,0.1]                       # 2个平滑参数
+breakpoints = [282.401849, 1364.632182]   # 2个拐点
+alphas = [0.033560, 1.281681, 1.551975]   # 3个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
 ax['lc'].plot(x,y)
+
+for bp in breakpoints:
+    ax['lc'].axvline(bp, color='r', linestyle='--', alpha=0.5)
 
 ax['lc'].set_xscale('log')
 ax['lc'].set_yscale('log')
@@ -187,7 +202,7 @@ ax['lc'].set_ylabel('Flux density [Jy]')
 ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
 
-<img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/a2106b23-cc8c-4f23-9d49-a4b1a8de10db' />。">
+<img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f' />。">
 <meta property="og:title" content="bilby">
 <meta property="og:description" content="bilby + PyMultiNest + MultiNest
 
@@ -269,11 +284,13 @@ class SimpleGaussianLikelihood(bilby.Likelihood):
     def log_likelihood(self):
         c = self.parameters['c']  
         breakpoint1 = self.parameters['breakpoint1']
+        breakpoint2 = self.parameters['breakpoint2']
         alpha1 = self.parameters['alpha1']
         alpha2 = self.parameters['alpha2']
-        log_f = self.parameters['log_f']      
+        alpha3 = self.parameters['alpha3']
+        log_f = self.parameters['log_f']     
 
-        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1], alphas=[alpha1,alpha2], deltas=[0.1])
+        model = multi_sbpl(self.x, c, breakpoints=[breakpoint1,breakpoint2], alphas=[alpha1,alpha2,alpha3], deltas=[0.1,0.1])
 
         res = self.y - model
         sigma2 = self.yerr**2 + model**2 * np.exp(2 * log_f)
@@ -287,15 +304,17 @@ likelihood = SimpleGaussianLikelihood(x_time, x_flux, x_flux_err)
 priors = dict(
     c = bilby.core.prior.Uniform(-4, -3, 'k',r'$c$'),
     breakpoint1 = bilby.core.prior.Uniform(200, 500, 'breakpoint1',r'$breakpoint1$'),
+    breakpoint2 = bilby.core.prior.Uniform(500,10000, 'breakpoint2',r'$breakpoint2$'),
     alpha1 = bilby.core.prior.Uniform(0, 0.5, 'alpha1',r'$alpha1$'),
     alpha2 = bilby.core.prior.Uniform(1, 2, 'alpha2', r'$alpha2$'),
+    alpha3 = bilby.core.prior.Uniform(1, 2, 'alpha3', r'$alpha3$'),
     log_f = bilby.core.prior.Uniform(-10., 1., 'log_f', r'$\log f_\mathrm{sys}$'),
 )
 ```
 
 ```python
 # A few simple setup steps
-label = '10keV'
+label = '10keV-2broken'
 outdir = 'outdir'
 
 # And run sampler
@@ -309,7 +328,7 @@ result = bilby.run_sampler(
     verbose=False,
     nlive=2000,
     resume=True,
-    clean= True,
+    clean=True,
 )
 ```
 
@@ -320,12 +339,15 @@ labels=[prior_dist.latex_label for key, prior_dist in priors.items()]
 )
 ```
 
-<img width='1158' height='1180' alt='Image' src='https://github.com/user-attachments/assets/8a7d8e00-17d1-4ec8-8997-0942772f5ce7' />
+<img width='1578' height='1600' alt='Image' src='https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14' />
 
 ```python
+print(label)
+print(f'log Z = {result.log_evidence} ± {result.log_evidence_err}\n')
+
 quantile_tab = result.posterior.quantile([0.16, 0.5, 0.84])
 # 遍历所有列，打印中位数和上下误差
-for col in quantile_tab.columns:
+for col in quantile_tab.columns[:-2]:
     q16 = quantile_tab.loc[0.16, col]
     q50 = quantile_tab.loc[0.50, col]
     q84 = quantile_tab.loc[0.84, col]
@@ -345,19 +367,27 @@ ax['lc'].errorbar(x_time, x_flux,
     yerr = x_flux_err, 
     fmt='+', color='k', ms=2, capsize=0, label='flux density @ 10 keV',alpha=0.2)
 
-# 示例：2段 SBPL
-# c = -3.360415 (+0.128805/-0.123300)
-# breakpoint1 = 333.307345 (+11.413913/-10.706484)
-# alpha1 = 0.106762 (+0.056405/-0.053952)
-# alpha2 = 1.471906 (+0.011692/-0.011421)
+# 10keV-2broken
+# log Z = 12270.855083203984 ± 0.09596729206594165
+
+# c = -3.511708 (+0.095322/-0.053394)
+# breakpoint1 = 282.401849 (+9.890989/-9.029383)
+# breakpoint2 = 1364.632182 (+445.765043/-317.448853)
+# alpha1 = 0.033560 (+0.042786/-0.024177)
+# alpha2 = 1.281681 (+0.028755/-0.032431)
+# alpha3 = 1.551975 (+0.027622/-0.023177)
+# log_f = -1.431941 (+0.029968/-0.028908)
 
 x = np.logspace(1.5, 6, 1000)
-c = -3.360415
-deltas = [0.1]        # 1个平滑参数
-breakpoints = [333.307345]  # 1个拐点
-alphas = [0.106762, 1.471906]     # 2个幂律指数
+c = -3.511708
+deltas = [0.1,0.1]                       # 2个平滑参数
+breakpoints = [282.401849, 1364.632182]   # 2个拐点
+alphas = [0.033560, 1.281681, 1.551975]   # 3个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
 ax['lc'].plot(x,y)
+
+for bp in breakpoints:
+    ax['lc'].axvline(bp, color='r', linestyle='--', alpha=0.5)
 
 ax['lc'].set_xscale('log')
 ax['lc'].set_yscale('log')
@@ -366,7 +396,7 @@ ax['lc'].set_ylabel('Flux density [Jy]')
 ax['lc'].legend(frameon=True,framealpha=0.5)
 ```
 
-<img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/a2106b23-cc8c-4f23-9d49-a4b1a8de10db' />。">
+<img width='578' height='438' alt='Image' src='https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f' />。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://astro-lee.github.io/post/bilby.html">
 <meta property="og:image" content="https://github.githubassets.com/favicons/favicon.svg">
@@ -506,11 +536,13 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-k">def</span> <span class="pl-en">log_likelihood</span>(<span class="pl-s1">self</span>):
         <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"c"</span>]  
         <span class="pl-s1">breakpoint1</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"breakpoint1"</span>]
+        <span class="pl-s1">breakpoint2</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"breakpoint2"</span>]
         <span class="pl-s1">alpha1</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"alpha1"</span>]
         <span class="pl-s1">alpha2</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"alpha2"</span>]
-        <span class="pl-s1">log_f</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"log_f"</span>]      
+        <span class="pl-s1">alpha3</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"alpha3"</span>]
+        <span class="pl-s1">log_f</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">parameters</span>[<span class="pl-s">"log_f"</span>]     
 
-        <span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">self</span>.<span class="pl-c1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span><span class="pl-c1">=</span>[<span class="pl-s1">breakpoint1</span>], <span class="pl-s1">alphas</span><span class="pl-c1">=</span>[<span class="pl-s1">alpha1</span>,<span class="pl-s1">alpha2</span>], <span class="pl-s1">deltas</span><span class="pl-c1">=</span>[<span class="pl-c1">0.1</span>])
+        <span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">self</span>.<span class="pl-c1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span><span class="pl-c1">=</span>[<span class="pl-s1">breakpoint1</span>,<span class="pl-s1">breakpoint2</span>], <span class="pl-s1">alphas</span><span class="pl-c1">=</span>[<span class="pl-s1">alpha1</span>,<span class="pl-s1">alpha2</span>,<span class="pl-s1">alpha3</span>], <span class="pl-s1">deltas</span><span class="pl-c1">=</span>[<span class="pl-c1">0.1</span>,<span class="pl-c1">0.1</span>])
 
         <span class="pl-s1">res</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">y</span> <span class="pl-c1">-</span> <span class="pl-s1">model</span>
         <span class="pl-s1">sigma2</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-c1">yerr</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-c1">+</span> <span class="pl-s1">model</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-s1">np</span>.<span class="pl-c1">exp</span>(<span class="pl-c1">2</span> <span class="pl-c1">*</span> <span class="pl-s1">log_f</span>)
@@ -524,12 +556,14 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-s1">priors</span> <span class="pl-c1">=</span> <span class="pl-en">dict</span>(
     <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">-</span><span class="pl-c1">4</span>, <span class="pl-c1">-</span><span class="pl-c1">3</span>, <span class="pl-s">"k"</span>,<span class="pl-s">r"$c$"</span>),
     <span class="pl-s1">breakpoint1</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">200</span>, <span class="pl-c1">500</span>, <span class="pl-s">"breakpoint1"</span>,<span class="pl-s">r"$breakpoint1$"</span>),
+    <span class="pl-s1">breakpoint2</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">500</span>,<span class="pl-c1">10000</span>, <span class="pl-s">"breakpoint2"</span>,<span class="pl-s">r"$breakpoint2$"</span>),
     <span class="pl-s1">alpha1</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">0</span>, <span class="pl-c1">0.5</span>, <span class="pl-s">"alpha1"</span>,<span class="pl-s">r"$alpha1$"</span>),
     <span class="pl-s1">alpha2</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-s">"alpha2"</span>, <span class="pl-s">r"$alpha2$"</span>),
+    <span class="pl-s1">alpha3</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-s">"alpha3"</span>, <span class="pl-s">r"$alpha3$"</span>),
     <span class="pl-s1">log_f</span> <span class="pl-c1">=</span> <span class="pl-s1">bilby</span>.<span class="pl-c1">core</span>.<span class="pl-c1">prior</span>.<span class="pl-c1">Uniform</span>(<span class="pl-c1">-</span><span class="pl-c1">10.</span>, <span class="pl-c1">1.</span>, <span class="pl-s">"log_f"</span>, <span class="pl-s">r"$\log f_\mathrm{sys}$"</span>),
 )</pre></div>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-c"># A few simple setup steps</span>
-<span class="pl-s1">label</span> <span class="pl-c1">=</span> <span class="pl-s">"10keV"</span>
+<span class="pl-s1">label</span> <span class="pl-c1">=</span> <span class="pl-s">"10keV-2broken"</span>
 <span class="pl-s1">outdir</span> <span class="pl-c1">=</span> <span class="pl-s">"outdir"</span>
 
 <span class="pl-c"># And run sampler</span>
@@ -543,16 +577,19 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-s1">verbose</span><span class="pl-c1">=</span><span class="pl-c1">False</span>,
     <span class="pl-s1">nlive</span><span class="pl-c1">=</span><span class="pl-c1">2000</span>,
     <span class="pl-s1">resume</span><span class="pl-c1">=</span><span class="pl-c1">True</span>,
-    <span class="pl-s1">clean</span><span class="pl-c1">=</span> <span class="pl-c1">True</span>,
+    <span class="pl-s1">clean</span><span class="pl-c1">=</span><span class="pl-c1">True</span>,
 )</pre></div>
 <div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">result</span>.<span class="pl-c1">plot_corner</span>(<span class="pl-s1">save</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">filename</span><span class="pl-c1">=</span><span class="pl-s">'corner.pdf'</span>,
 <span class="pl-s1">show_titles</span><span class="pl-c1">=</span><span class="pl-c1">True</span>, <span class="pl-s1">quantiles</span><span class="pl-c1">=</span>[<span class="pl-c1">0.16</span>, <span class="pl-c1">0.5</span>, <span class="pl-c1">0.84</span>], 
 <span class="pl-s1">labels</span><span class="pl-c1">=</span>[<span class="pl-s1">prior_dist</span>.<span class="pl-c1">latex_label</span> <span class="pl-k">for</span> <span class="pl-s1">key</span>, <span class="pl-s1">prior_dist</span> <span class="pl-c1">in</span> <span class="pl-s1">priors</span>.<span class="pl-c1">items</span>()]
 )</pre></div>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/8a7d8e00-17d1-4ec8-8997-0942772f5ce7"><img width="1158" height="1180" alt="Image" src="https://github.com/user-attachments/assets/8a7d8e00-17d1-4ec8-8997-0942772f5ce7" style="max-width: 100%; height: auto; max-height: 1180px;"></a></p>
-<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">quantile_tab</span> <span class="pl-c1">=</span> <span class="pl-s1">result</span>.<span class="pl-c1">posterior</span>.<span class="pl-c1">quantile</span>([<span class="pl-c1">0.16</span>, <span class="pl-c1">0.5</span>, <span class="pl-c1">0.84</span>])
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14"><img width="1578" height="1600" alt="Image" src="https://github.com/user-attachments/assets/1b231d53-1d51-45a6-aca9-47da52131c14" style="max-width: 100%; height: auto; max-height: 1600px;"></a></p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-en">print</span>(<span class="pl-s1">label</span>)
+<span class="pl-en">print</span>(<span class="pl-s">f'log Z = <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result</span>.<span class="pl-c1">log_evidence</span><span class="pl-kos">}</span></span> ± <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result</span>.<span class="pl-c1">log_evidence_err</span><span class="pl-kos">}</span></span><span class="pl-cce">\n</span>'</span>)
+
+<span class="pl-s1">quantile_tab</span> <span class="pl-c1">=</span> <span class="pl-s1">result</span>.<span class="pl-c1">posterior</span>.<span class="pl-c1">quantile</span>([<span class="pl-c1">0.16</span>, <span class="pl-c1">0.5</span>, <span class="pl-c1">0.84</span>])
 <span class="pl-c"># 遍历所有列，打印中位数和上下误差</span>
-<span class="pl-k">for</span> <span class="pl-s1">col</span> <span class="pl-c1">in</span> <span class="pl-s1">quantile_tab</span>.<span class="pl-c1">columns</span>:
+<span class="pl-k">for</span> <span class="pl-s1">col</span> <span class="pl-c1">in</span> <span class="pl-s1">quantile_tab</span>.<span class="pl-c1">columns</span>[:<span class="pl-c1">-</span><span class="pl-c1">2</span>]:
     <span class="pl-s1">q16</span> <span class="pl-c1">=</span> <span class="pl-s1">quantile_tab</span>.<span class="pl-c1">loc</span>[<span class="pl-c1">0.16</span>, <span class="pl-s1">col</span>]
     <span class="pl-s1">q50</span> <span class="pl-c1">=</span> <span class="pl-s1">quantile_tab</span>.<span class="pl-c1">loc</span>[<span class="pl-c1">0.50</span>, <span class="pl-s1">col</span>]
     <span class="pl-s1">q84</span> <span class="pl-c1">=</span> <span class="pl-s1">quantile_tab</span>.<span class="pl-c1">loc</span>[<span class="pl-c1">0.84</span>, <span class="pl-s1">col</span>]
@@ -569,26 +606,34 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <span class="pl-s1">yerr</span> <span class="pl-c1">=</span> <span class="pl-s1">x_flux_err</span>, 
     <span class="pl-s1">fmt</span><span class="pl-c1">=</span><span class="pl-s">'+'</span>, <span class="pl-s1">color</span><span class="pl-c1">=</span><span class="pl-s">'k'</span>, <span class="pl-s1">ms</span><span class="pl-c1">=</span><span class="pl-c1">2</span>, <span class="pl-s1">capsize</span><span class="pl-c1">=</span><span class="pl-c1">0</span>, <span class="pl-s1">label</span><span class="pl-c1">=</span><span class="pl-s">'flux density @ 10 keV'</span>,<span class="pl-s1">alpha</span><span class="pl-c1">=</span><span class="pl-c1">0.2</span>)
 
-<span class="pl-c"># 示例：2段 SBPL</span>
-<span class="pl-c"># c = -3.360415 (+0.128805/-0.123300)</span>
-<span class="pl-c"># breakpoint1 = 333.307345 (+11.413913/-10.706484)</span>
-<span class="pl-c"># alpha1 = 0.106762 (+0.056405/-0.053952)</span>
-<span class="pl-c"># alpha2 = 1.471906 (+0.011692/-0.011421)</span>
+<span class="pl-c"># 10keV-2broken</span>
+<span class="pl-c"># log Z = 12270.855083203984 ± 0.09596729206594165</span>
+
+<span class="pl-c"># c = -3.511708 (+0.095322/-0.053394)</span>
+<span class="pl-c"># breakpoint1 = 282.401849 (+9.890989/-9.029383)</span>
+<span class="pl-c"># breakpoint2 = 1364.632182 (+445.765043/-317.448853)</span>
+<span class="pl-c"># alpha1 = 0.033560 (+0.042786/-0.024177)</span>
+<span class="pl-c"># alpha2 = 1.281681 (+0.028755/-0.032431)</span>
+<span class="pl-c"># alpha3 = 1.551975 (+0.027622/-0.023177)</span>
+<span class="pl-c"># log_f = -1.431941 (+0.029968/-0.028908)</span>
 
 <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">logspace</span>(<span class="pl-c1">1.5</span>, <span class="pl-c1">6</span>, <span class="pl-c1">1000</span>)
-<span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3.360415</span>
-<span class="pl-s1">deltas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.1</span>]        <span class="pl-c"># 1个平滑参数</span>
-<span class="pl-s1">breakpoints</span> <span class="pl-c1">=</span> [<span class="pl-c1">333.307345</span>]  <span class="pl-c"># 1个拐点</span>
-<span class="pl-s1">alphas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.106762</span>, <span class="pl-c1">1.471906</span>]     <span class="pl-c"># 2个幂律指数</span>
+<span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3.511708</span>
+<span class="pl-s1">deltas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.1</span>,<span class="pl-c1">0.1</span>]                       <span class="pl-c"># 2个平滑参数</span>
+<span class="pl-s1">breakpoints</span> <span class="pl-c1">=</span> [<span class="pl-c1">282.401849</span>, <span class="pl-c1">1364.632182</span>]   <span class="pl-c"># 2个拐点</span>
+<span class="pl-s1">alphas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.033560</span>, <span class="pl-c1">1.281681</span>, <span class="pl-c1">1.551975</span>]   <span class="pl-c"># 3个幂律指数</span>
 <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span>, <span class="pl-s1">alphas</span>, <span class="pl-s1">deltas</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">plot</span>(<span class="pl-s1">x</span>,<span class="pl-s1">y</span>)
+
+<span class="pl-k">for</span> <span class="pl-s1">bp</span> <span class="pl-c1">in</span> <span class="pl-s1">breakpoints</span>:
+    <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">axvline</span>(<span class="pl-s1">bp</span>, <span class="pl-s1">color</span><span class="pl-c1">=</span><span class="pl-s">'r'</span>, <span class="pl-s1">linestyle</span><span class="pl-c1">=</span><span class="pl-s">'--'</span>, <span class="pl-s1">alpha</span><span class="pl-c1">=</span><span class="pl-c1">0.5</span>)
 
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">set_xscale</span>(<span class="pl-s">'log'</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">set_yscale</span>(<span class="pl-s">'log'</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">set_xlabel</span>(<span class="pl-s">'Time since trigger [s]'</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">set_ylabel</span>(<span class="pl-s">'Flux density [Jy]'</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">legend</span>(<span class="pl-s1">frameon</span><span class="pl-c1">=</span><span class="pl-c1">True</span>,<span class="pl-s1">framealpha</span><span class="pl-c1">=</span><span class="pl-c1">0.5</span>)</pre></div>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/a2106b23-cc8c-4f23-9d49-a4b1a8de10db"><img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/a2106b23-cc8c-4f23-9d49-a4b1a8de10db" style="max-width: 100%; height: auto; max-height: 438px;"></a></p></div>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f"><img width="578" height="438" alt="Image" src="https://github.com/user-attachments/assets/7efe8f93-f9c6-4bb2-87ae-9e3cc69a9b6f" style="max-width: 100%; height: auto; max-height: 438px;"></a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;">转载请注明出处</div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
