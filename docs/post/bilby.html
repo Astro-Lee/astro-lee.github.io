@@ -184,11 +184,20 @@ ax['lc'].errorbar(x_time, x_flux,
 # alpha3 = 1.551975 (+0.027622/-0.023177)
 # log_f = -1.431941 (+0.029968/-0.028908)
 
+# 10keV-1broken
+# log Z = 12250.889339996882 ± 0.08563383228929447
+
+# c = -3.359253 (+0.130664/-0.124555)
+# breakpoint1 = 333.251729 (+11.848272/-10.852528)
+# alpha1 = 0.107049 (+0.057266/-0.054615)
+# alpha2 = 1.471793 (+0.011757/-0.011525)
+# log_f = -1.400355 (+0.028854/-0.029786)
+
 x = np.logspace(1.5, 6, 1000)
 c = -3.511708
-deltas = [0.1,0.1]                       # 2个平滑参数
-breakpoints = [282.401849, 1364.632182]   # 2个拐点
-alphas = [0.033560, 1.281681, 1.551975]   # 3个幂律指数
+deltas = [0.1,0.1]                                                # 2个平滑参数
+breakpoints = [282.401849, 1364.632182]    # 2个拐点
+alphas = [0.033560, 1.281681, 1.551975]       # 3个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
 ax['lc'].plot(x,y)
 
@@ -378,11 +387,20 @@ ax['lc'].errorbar(x_time, x_flux,
 # alpha3 = 1.551975 (+0.027622/-0.023177)
 # log_f = -1.431941 (+0.029968/-0.028908)
 
+# 10keV-1broken
+# log Z = 12250.889339996882 ± 0.08563383228929447
+
+# c = -3.359253 (+0.130664/-0.124555)
+# breakpoint1 = 333.251729 (+11.848272/-10.852528)
+# alpha1 = 0.107049 (+0.057266/-0.054615)
+# alpha2 = 1.471793 (+0.011757/-0.011525)
+# log_f = -1.400355 (+0.028854/-0.029786)
+
 x = np.logspace(1.5, 6, 1000)
 c = -3.511708
-deltas = [0.1,0.1]                       # 2个平滑参数
-breakpoints = [282.401849, 1364.632182]   # 2个拐点
-alphas = [0.033560, 1.281681, 1.551975]   # 3个幂律指数
+deltas = [0.1,0.1]                                                # 2个平滑参数
+breakpoints = [282.401849, 1364.632182]    # 2个拐点
+alphas = [0.033560, 1.281681, 1.551975]       # 3个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
 ax['lc'].plot(x,y)
 
@@ -617,11 +635,20 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-c"># alpha3 = 1.551975 (+0.027622/-0.023177)</span>
 <span class="pl-c"># log_f = -1.431941 (+0.029968/-0.028908)</span>
 
+<span class="pl-c"># 10keV-1broken</span>
+<span class="pl-c"># log Z = 12250.889339996882 ± 0.08563383228929447</span>
+
+<span class="pl-c"># c = -3.359253 (+0.130664/-0.124555)</span>
+<span class="pl-c"># breakpoint1 = 333.251729 (+11.848272/-10.852528)</span>
+<span class="pl-c"># alpha1 = 0.107049 (+0.057266/-0.054615)</span>
+<span class="pl-c"># alpha2 = 1.471793 (+0.011757/-0.011525)</span>
+<span class="pl-c"># log_f = -1.400355 (+0.028854/-0.029786)</span>
+
 <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">logspace</span>(<span class="pl-c1">1.5</span>, <span class="pl-c1">6</span>, <span class="pl-c1">1000</span>)
 <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3.511708</span>
-<span class="pl-s1">deltas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.1</span>,<span class="pl-c1">0.1</span>]                       <span class="pl-c"># 2个平滑参数</span>
-<span class="pl-s1">breakpoints</span> <span class="pl-c1">=</span> [<span class="pl-c1">282.401849</span>, <span class="pl-c1">1364.632182</span>]   <span class="pl-c"># 2个拐点</span>
-<span class="pl-s1">alphas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.033560</span>, <span class="pl-c1">1.281681</span>, <span class="pl-c1">1.551975</span>]   <span class="pl-c"># 3个幂律指数</span>
+<span class="pl-s1">deltas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.1</span>,<span class="pl-c1">0.1</span>]                                                <span class="pl-c"># 2个平滑参数</span>
+<span class="pl-s1">breakpoints</span> <span class="pl-c1">=</span> [<span class="pl-c1">282.401849</span>, <span class="pl-c1">1364.632182</span>]    <span class="pl-c"># 2个拐点</span>
+<span class="pl-s1">alphas</span> <span class="pl-c1">=</span> [<span class="pl-c1">0.033560</span>, <span class="pl-c1">1.281681</span>, <span class="pl-c1">1.551975</span>]       <span class="pl-c"># 3个幂律指数</span>
 <span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span>, <span class="pl-s1">alphas</span>, <span class="pl-s1">deltas</span>)
 <span class="pl-s1">ax</span>[<span class="pl-s">'lc'</span>].<span class="pl-c1">plot</span>(<span class="pl-s1">x</span>,<span class="pl-s1">y</span>)
 
