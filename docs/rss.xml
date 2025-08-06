@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 11:14:47 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 11:20:38 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
 
 ```python
 import pandas as pd
@@ -123,7 +123,7 @@ result = bilby.run_sampler(
     verbose=False,
     nlive=2000,
     resume=True,
-    clean=True,
+    clean=False,
 )
 ```
 

@@ -122,7 +122,7 @@ result = bilby.run_sampler(
     verbose=False,
     nlive=2000,
     resume=True,
-    clean=True,
+    clean=False,
 )
 ```
 
