@@ -6,7 +6,7 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
     参数:
         x: 自变量 (array-like)
-        c: 归一化常数
+        c: 归一化幂指数
         breakpoints: 拐点列表 [xb1, xb2, ..., xb(n-1)]
         alphas: 正的幂律指数绝对值列表 [alpha1, alpha2, ..., alphan]
         deltas: 平滑参数列表 [delta1, delta2, ..., delta(n-1)]

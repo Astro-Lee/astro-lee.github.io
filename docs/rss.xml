@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Wed, 06 Aug 2025 12:40:17 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://astro-lee.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://astro-lee.github.io</link></image><lastBuildDate>Thu, 07 Aug 2025 07:13:07 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>bilby</title><link>https://astro-lee.github.io/post/bilby.html</link><description>bilby + PyMultiNest + MultiNest
 
 ```python
 def multi_sbpl(x, c, breakpoints, alphas, deltas):
@@ -7,7 +7,7 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
     参数:
         x: 自变量 (array-like)
-        c: 归一化常数
+        c: 归一化幂指数
         breakpoints: 拐点列表 [xb1, xb2, ..., xb(n-1)]
         alphas: 正的幂律指数绝对值列表 [alpha1, alpha2, ..., alphan]
         deltas: 平滑参数列表 [delta1, delta2, ..., delta(n-1)]
