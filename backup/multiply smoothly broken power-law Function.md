@@ -11,7 +11,7 @@ $f(x) = 10^{c}\cdot x^{-\alpha_1}\cdot\prod_{i=1}^{n-1}\left[1+\left(\frac{x}{x_
 import numpy as np
 import matplotlib.pyplot as plt
 
-def multi_sbpl(x, c, breakpoints, alphas, deltas):
+def multi_sbpl(x, c, breakpoints, alphas):
     """
     多段平滑破幂律函数，幂律指数为负值形式 (-alpha_i)
     参数:
@@ -19,23 +19,24 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
         c: 归一化幂指数
         breakpoints: 拐点列表 [xb1, xb2, ..., xb(n-1)]
         alphas: 正的幂律指数绝对值列表 [alpha1, alpha2, ..., alphan]
-        deltas: 平滑参数列表 [delta1, delta2, ..., delta(n-1)]
+        deltas: 平滑参数列表 [delta1, delta2, ..., delta(n-1)]，也可固定为一个数
     返回:
         f(x): SBPL 函数值
     """
+    deltas = 0.1
+
     # 初始幂律指数为 -alpha1
     result = 10**c * x**(-alphas[0])
     # 计算每个拐点的平滑过渡
     for i in range(len(breakpoints)):
-        term = 1 + (x / breakpoints[i])**(1 / deltas[i])
+        term = 1 + (x / breakpoints[i])**(1 / deltas)
         # 指数差为 -alpha_(i+1) - (-alpha_i) = alpha_i - alpha_(i+1)
-        result *= term**(-deltas[i] * (alphas[i + 1] - alphas[i]))
+        result *= term**(-deltas * (alphas[i + 1] - alphas[i]))
     return result
 
 # 示例：三段 SBPL
 x = np.logspace(-1, 5, 1000)
 c = 1.0
-deltas = [0.1, 0.1]       # 两个平滑参数
 breakpoints = [200, 5000]  # 两个拐点
 alphas = [2.5, 1., 3.5]  # 三个幂律指数
 y = multi_sbpl(x, c, breakpoints, alphas, deltas)
