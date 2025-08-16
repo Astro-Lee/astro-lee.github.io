@@ -23,7 +23,6 @@ def multi_sbpl(x, c, breakpoints, alphas, deltas):
     返回:
         f(x): SBPL 函数值
     """
-    x = np.array(x)
     # 初始幂律指数为 -alpha1
     result = 10**c * x**(-alphas[0])
     # 计算每个拐点的平滑过渡

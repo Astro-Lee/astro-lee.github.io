@@ -118,7 +118,6 @@ $x$ &gt; $0$ : 自变量，确保幂律定义有效。</li>
 <span class="pl-s">    返回:</span>
 <span class="pl-s">        f(x): SBPL 函数值</span>
 <span class="pl-s">    """</span>
-    <span class="pl-s1">x</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-c1">array</span>(<span class="pl-s1">x</span>)
     <span class="pl-c"># 初始幂律指数为 -alpha1</span>
     <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-c1">10</span><span class="pl-c1">**</span><span class="pl-s1">c</span> <span class="pl-c1">*</span> <span class="pl-s1">x</span><span class="pl-c1">**</span>(<span class="pl-c1">-</span><span class="pl-s1">alphas</span>[<span class="pl-c1">0</span>])
     <span class="pl-c"># 计算每个拐点的平滑过渡</span>
