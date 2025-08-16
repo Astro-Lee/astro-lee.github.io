@@ -39,7 +39,7 @@ x = np.logspace(-1, 5, 1000)
 c = 1.0
 breakpoints = [200, 5000]  # 两个拐点
 alphas = [2.5, 1., 3.5]  # 三个幂律指数
-y = multi_sbpl(x, c, breakpoints, alphas, deltas)
+y = multi_sbpl(x, c, breakpoints, alphas)
 
 plt.plot(x, y)
 plt.xscale('log')

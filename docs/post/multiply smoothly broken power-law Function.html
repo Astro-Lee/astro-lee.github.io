@@ -134,7 +134,7 @@ $x$ &gt; $0$ : 自变量，确保幂律定义有效。</li>
 <span class="pl-s1">c</span> <span class="pl-c1">=</span> <span class="pl-c1">1.0</span>
 <span class="pl-s1">breakpoints</span> <span class="pl-c1">=</span> [<span class="pl-c1">200</span>, <span class="pl-c1">5000</span>]  <span class="pl-c"># 两个拐点</span>
 <span class="pl-s1">alphas</span> <span class="pl-c1">=</span> [<span class="pl-c1">2.5</span>, <span class="pl-c1">1.</span>, <span class="pl-c1">3.5</span>]  <span class="pl-c"># 三个幂律指数</span>
-<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span>, <span class="pl-s1">alphas</span>, <span class="pl-s1">deltas</span>)
+<span class="pl-s1">y</span> <span class="pl-c1">=</span> <span class="pl-en">multi_sbpl</span>(<span class="pl-s1">x</span>, <span class="pl-s1">c</span>, <span class="pl-s1">breakpoints</span>, <span class="pl-s1">alphas</span>)
 
 <span class="pl-s1">plt</span>.<span class="pl-c1">plot</span>(<span class="pl-s1">x</span>, <span class="pl-s1">y</span>)
 <span class="pl-s1">plt</span>.<span class="pl-c1">xscale</span>(<span class="pl-s">'log'</span>)
