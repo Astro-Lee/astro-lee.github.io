@@ -3,3 +3,4 @@
 - [THE ONLINE MCMC](https://www.theonlinemcmc.com/)
 - [Definition of TIME in NICER Data Files](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/time/)
 - [定投计算器](https://danjuanfunds.com/calculator/danjuan)
+- [Efficient Frontier in Python – Detailed Tutorial](https://towardsdatascience.com/efficient-frontier-in-python-detailed-tutorial-84a304f03e79/)
