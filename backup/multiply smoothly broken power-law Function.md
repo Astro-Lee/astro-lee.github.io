@@ -48,4 +48,6 @@ plt.yscale('log')
 
 <img width="650" height="614" alt="Image" src="https://github.com/user-attachments/assets/b4bc3a5a-a5c3-4ce8-af8e-5b4ed5d43464" />
 
-其他材料：[The circumburst density profile around GRB progenitors: a statistical study](https://ui.adsabs.harvard.edu/abs/2011A%26A...526A..23S/abstract)
+其他材料：
+- [The circumburst density profile around GRB progenitors: a statistical study](https://ui.adsabs.harvard.edu/abs/2011A%26A...526A..23S/abstract)
+- [Investigating Temporal Features in Swift GRB Afterglows: A Comparative Study of UVOT and XRT Data](https://arxiv.org/abs/2509.07560)
