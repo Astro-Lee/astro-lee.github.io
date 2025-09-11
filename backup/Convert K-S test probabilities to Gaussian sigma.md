@@ -30,3 +30,40 @@ sigma_level
 ```
 
 在这个示例中，p值为0.05对应于双尾检验中的大约1.96个sigma。
+
+在统计检验中，双尾检验用于检测数据是否显著偏离零假设的两侧。对于 Kolmogorov-Smirnov (K-S) 检验来说，一般是关心样本分布与理论分布之间是否存在显著差异，这种差异可能发生在分布的任何一端，因此通常采用双尾检验。
+
+让我们具体来看为什么在将 p 值转换为 sigma 水平时使用双尾检验：
+
+1. **双尾检验**：假设我们有一个 p 值为 0.08%，它表示在零假设为真时，样本与理论分布之间的差异大于或等于观测到的差异的概率为 0.08%。在双尾检验中，我们需要将这 8% 的概率分配到分布的两端（每端 0.04%），因为我们关心的是任意一端的偏差。因此，在计算 sigma 水平时，我们使用 `1 - p_value / 2`。
+
+2. **单尾检验**：如果我们只关心一个方向上的偏差，例如样本是否显著大于理论分布，则可以使用单尾检验。在这种情况下，我们会直接使用 `1 - p_value`。
+
+下面是计算的 Python 代码示例：
+
+```python
+import scipy.stats as stats
+
+# K-S 检验得到的 p 值
+p_value = 0.08/100
+
+# 将 p 值转换为 sigma 水平（双尾检验）
+sigma_level = stats.norm.ppf(1 - p_value / 2)
+sigma_level
+```
+
+根据以上解释，对于 p 值为 0.08%，双尾检验对应的 sigma 水平大约为 3.35。换句话说，这个 p 值相当于正态分布中约 3.35 个标准差（sigma）的显著性水平。
+
+- [68–95–99.7 rule](https://en.wikipedia.org/wiki/68–95–99.7_rule)
+- [Confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)
+- [Confidence Intervals](https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_confidence_intervals/bs704_confidence_intervals_print.html)
+- [Understanding Confidence Intervals](https://www.scribbr.com/statistics/confidence-interval/)
+- [Confidence Interval Calculator](https://www.omnicalculator.com/statistics/confidence-interval)
+- [How to use norm.ppf()?](https://stackoverflow.com/questions/60699836/how-to-use-norm-ppf)
+
+Example:
+
+- [Line Chart with Confidence Interval in Python](https://www.pythoncharts.com/python/line-chart-with-confidence-interval/)
+- [seaborn.lineplot](https://seaborn.pydata.org/generated/seaborn.lineplot.html)
+- [Probability & Statistics](https://www.youtube.com/playlist?list=PLeB45KifGiuHesi4PALNZSYZFhViVGQJK)
+- [Prob/Stat for CS](https://www.alextsun.com/prob_stat_cs.html)
