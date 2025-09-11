@@ -115,6 +115,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-c"># 将p值转换为sigma水平</span>
 <span class="pl-s1">sigma_level</span> <span class="pl-c1">=</span> <span class="pl-s1">stats</span>.<span class="pl-c1">norm</span>.<span class="pl-c1">ppf</span>(<span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">p_value</span> <span class="pl-c1">/</span> <span class="pl-c1">2</span>)  <span class="pl-c"># 双尾检验</span>
 <span class="pl-s1">sigma_level</span></pre></div>
+<hr>
 <p>在这个示例中，p值为0.05对应于双尾检验中的大约1.96个sigma。</p>
 <p>在统计检验中，双尾检验用于检测数据是否显著偏离零假设的两侧。对于 Kolmogorov-Smirnov (K-S) 检验来说，一般是关心样本分布与理论分布之间是否存在显著差异，这种差异可能发生在分布的任何一端，因此通常采用双尾检验。</p>
 <p>让我们具体来看为什么在将 p 值转换为 sigma 水平时使用双尾检验：</p>
@@ -136,6 +137,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-s1">sigma_level</span> <span class="pl-c1">=</span> <span class="pl-s1">stats</span>.<span class="pl-c1">norm</span>.<span class="pl-c1">ppf</span>(<span class="pl-c1">1</span> <span class="pl-c1">-</span> <span class="pl-s1">p_value</span> <span class="pl-c1">/</span> <span class="pl-c1">2</span>)
 <span class="pl-s1">sigma_level</span></pre></div>
 <p>根据以上解释，对于 p 值为 0.08%，双尾检验对应的 sigma 水平大约为 3.35。换句话说，这个 p 值相当于正态分布中约 3.35 个标准差（sigma）的显著性水平。</p>
+<hr>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule" rel="nofollow">68–95–99.7 rule</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Confidence_interval" rel="nofollow">Confidence interval</a></li>
@@ -209,11 +211,7 @@ console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 
 <script>
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
-cmButton=document.getElementById("cmButton");
-    span=document.createElement("span");
-    span.setAttribute("class","Counter");
-    span.innerHTML="2";
-    cmButton.appendChild(span);
+
 
 
 function openComments(){

@@ -29,6 +29,8 @@ sigma_level = stats.norm.ppf(1 - p_value / 2)  # 双尾检验
 sigma_level
 ```
 
+---
+
 在这个示例中，p值为0.05对应于双尾检验中的大约1.96个sigma。
 
 在统计检验中，双尾检验用于检测数据是否显著偏离零假设的两侧。对于 Kolmogorov-Smirnov (K-S) 检验来说，一般是关心样本分布与理论分布之间是否存在显著差异，这种差异可能发生在分布的任何一端，因此通常采用双尾检验。
@@ -53,6 +55,8 @@ sigma_level
 ```
 
 根据以上解释，对于 p 值为 0.08%，双尾检验对应的 sigma 水平大约为 3.35。换句话说，这个 p 值相当于正态分布中约 3.35 个标准差（sigma）的显著性水平。
+
+---
 
 - [68–95–99.7 rule](https://en.wikipedia.org/wiki/68–95–99.7_rule)
 - [Confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)
