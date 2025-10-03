@@ -4,4 +4,4 @@
 - [Definition of TIME in NICER Data Files](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/time/)
 - [定投计算器](https://danjuanfunds.com/calculator/danjuan)
 - [Efficient Frontier in Python – Detailed Tutorial](https://towardsdatascience.com/efficient-frontier-in-python-detailed-tutorial-84a304f03e79/)
-- [China GDP Deflator](https://zh.tradingeconomics.com/china/gdp-deflator)
+- [China GDP Deflator](https://data.worldbank.org/indicator/NY.GDP.DEFL.KD.ZG?locations=CN)
